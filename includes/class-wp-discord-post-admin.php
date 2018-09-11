@@ -667,7 +667,7 @@ class WP_Discord_Post_Admin {
 		}
 
 		echo "</div>";
-		echo "<a href='#' onclick=\"jQuery('.discord_webhook_settings_section').append(jQuery('.discord_webhook_settings_single_section').eq(0).clone()); return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 55px; padding: 10px; font-size: 12px;'> + Add New </a> <div style='clear:both;'> </div>";
+		echo "<a href='#' onclick=\"jQuery('.discord_webhook_settings_section').append(jQuery('.discord_webhook_settings_single_section').eq(0).clone()); jQuery('input', jQuery('.discord_webhook_settings_single_section').eq(-1)).val(''); return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 55px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
 
 	}
 }
