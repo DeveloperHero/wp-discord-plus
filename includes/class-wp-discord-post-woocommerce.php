@@ -58,7 +58,8 @@ class WP_Discord_Post_WooCommerce {
 	 */
 	public function send_order( $order_id ) {
 		$order            = wc_get_order( $order_id );
-		$allowed_statuses = apply_filters( 'wp_discord_post_allowed_order_statuses', array( 'on-hold', 'processing', 'completed' ) );
+
+		$allowed_statuses = apply_filters( 'wp_discord_post_allowed_order_statuses', array( 'on-hold', 'processing', 'completed', 'pending' ) );
 
 		if ( ! in_array( $order->get_status(), $allowed_statuses ) ) {
 			return false;
@@ -71,7 +72,10 @@ class WP_Discord_Post_WooCommerce {
 			$embed   = $this->_prepare_order_embed( $order_id, $order );
 		}
 
-		$http = new WP_Discord_Post_HTTP( 'post' );
+		//todo:: Need to support multiple orders.
+		$tm_option = $this->_get_tm_option($order->get_items());
+
+		$http = new WP_Discord_Post_HTTP( 'post', $tm_option);
 		return $http->process( $content, $embed );
 	}
 
@@ -360,6 +364,32 @@ class WP_Discord_Post_WooCommerce {
 		$embed = apply_filters( 'wp_discord_post_order_embed', $embed, $product );
 
 		return $embed;
+	}
+
+	public function _get_tm_option($order_items)
+	{
+		$tc_label = get_option('wp_discord_post_settings_webhooks_tm_target_label');
+		foreach($order_items as $item)
+		{
+			$meta = $item->get_meta_data();
+			foreach( $meta as $m)
+			{
+				$meta_array = $m->get_data();
+				if ($meta_array['key'] == '_tmcartepo_data')
+				{
+					foreach($meta_array['value'] as $mv)
+					{
+						if ($mv['name'] == $tc_label)
+						{
+							return strtolower($mv['value']);
+						}
+					}
+				}
+			}
+			break;
+		}
+		//add a fail safe option
+		//return 'all';
 	}
 }
 

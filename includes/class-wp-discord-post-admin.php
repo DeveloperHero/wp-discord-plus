@@ -288,13 +288,13 @@ class WP_Discord_Post_Admin {
 			);
 
 			if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce_products' ) ) {
-				add_settings_field(
-					'wp_discord_post_product_webhook_url',
-					esc_html__( 'Discord Products Webhook URL', 'wp-discord-post' ),
-					array( $this, 'print_product_webhook_url_field' ),
-					'wp-discord-post',
-					'wp_discord_post_woocommerce_settings'
-				);
+				// add_settings_field(
+				// 	'wp_discord_post_product_webhook_url',
+				// 	esc_html__( 'Discord Products Webhook URL', 'wp-discord-post' ),
+				// 	array( $this, 'print_product_webhook_url_field' ),
+				// 	'wp-discord-post',
+				// 	'wp_discord_post_woocommerce_settings'
+				// );
 
 				add_settings_field(
 					'wp_discord_product_message_format',
@@ -317,13 +317,13 @@ class WP_Discord_Post_Admin {
 			);
 
 			if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce' ) ) {
-				add_settings_field(
-					'wp_discord_post_order_webhook_url',
-					esc_html__( 'Discord Orders Webhook URL', 'wp-discord-post' ),
-					array( $this, 'print_order_webhook_url_field' ),
-					'wp-discord-post',
-					'wp_discord_post_woocommerce_settings'
-				);
+				// add_settings_field(
+				// 	'wp_discord_post_order_webhook_url',
+				// 	esc_html__( 'Discord Orders Webhook URL', 'wp-discord-post' ),
+				// 	array( $this, 'print_order_webhook_url_field' ),
+				// 	'wp-discord-post',
+				// 	'wp_discord_post_woocommerce_settings'
+				// );
 
 				add_settings_field(
 					'wp_discord_order_message_format',
@@ -333,7 +333,7 @@ class WP_Discord_Post_Admin {
 					'wp_discord_post_woocommerce_settings'
 				);
 
-				register_setting( 'wp-discord-post', 'wp_discord_post_order_webhook_url' );
+				//register_setting( 'wp-discord-post', 'wp_discord_post_order_webhook_url' );
 				register_setting( 'wp-discord-post', 'wp_discord_order_message_format' );
 			}
 
