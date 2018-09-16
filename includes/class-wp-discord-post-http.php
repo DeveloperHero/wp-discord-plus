@@ -104,11 +104,14 @@ class WP_Discord_Post_HTTP {
 		$url = apply_filters( 'wp_discord_post_' . sanitize_key( $context ) . '_webhook_url', $url );
 		$url = apply_filters( 'wp_discord_post_webhook_url', $url );
 
+		/**
+		** Added by @mymizan to sort orders into different channels 
+		**/
 		if ($context == 'post' && !empty($tm_option))
 		{
 			$discord_option = get_option( 'wp_discord_post_settings_webhooks_input');
 			foreach ($discord_option as $value) {
-				if ($value['chatroom'] == trim($tm_option))
+				if (strtolower($value['chatroom']) == strtolower(trim($tm_option)))
 				{
 					$url = $value['webhook'];
 				}
