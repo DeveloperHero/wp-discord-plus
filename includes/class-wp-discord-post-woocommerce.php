@@ -361,6 +361,43 @@ class WP_Discord_Post_WooCommerce {
 			);
 		}
 
+		$tm_extra_options = '';
+		$items = $order->get_items();
+		foreach($items as $i)
+		{
+			$meta = $i->get_meta_data();
+			foreach( $meta as $m)
+			{
+				$meta_array = $m->get_data();
+				if ($meta_array['key'] == '_tmcartepo_data')
+				{
+					foreach($meta_array['value'] as $mv)
+					{
+						if (!empty($mv['name']))
+						{
+							$name = $mv['name']; 
+						} else {
+							$name = "(No Name)"; 
+						}
+
+						if (!empty($mv['value'])){
+							$value = $mv['value'];
+						} else {
+							$value = "(No Value)";
+						}
+						$tm_extra_options .= $name . ": " . $value . "\n";
+					}
+				}
+			}
+			break;
+		}
+		
+
+		$embed['fields'][] = array(
+			'name'   => esc_html__( 'TM Extra Options', 'wp-discord-post' ),
+			'value'  => esc_html__( "Extra options from TM Plugin. \n" . $tm_extra_options),
+		);
+
 		$embed = apply_filters( 'wp_discord_post_order_embed', $embed, $product );
 
 		return $embed;
