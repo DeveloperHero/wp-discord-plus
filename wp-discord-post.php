@@ -145,3 +145,13 @@ class WP_Discord_Post {
 }
 
 WP_Discord_Post::instance();
+
+// function wp_discord_inset_tm_options($options_array)
+// {
+// 	echo "<pre>";
+// 	var_dump($options_array);
+// 	echo "</pre>";
+// 	die();
+// }
+
+// add_filter('wc_epo_builder_after_element_array', 'wp_discord_inset_tm_options');
