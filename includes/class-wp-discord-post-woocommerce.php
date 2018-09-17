@@ -1,4 +1,4 @@
-<?php
+H<?php
 /**
  * WP Discord Post WooCommerce
  *
@@ -405,6 +405,7 @@ class WP_Discord_Post_WooCommerce {
 
 	public function _get_tm_option($order_items)
 	{
+		$tc_type_array = array();
 		$tc_label = get_option('wp_discord_post_settings_webhooks_tm_target_label');
 		foreach($order_items as $item)
 		{
@@ -418,15 +419,20 @@ class WP_Discord_Post_WooCommerce {
 					{
 						if ($mv['name'] == $tc_label)
 						{
-							return strtolower($mv['value']);
+							$tc_type_array[] =  strtolower($mv['value']);
 						}
 					}
 				}
 			}
-			break;
 		}
-		//add a fail safe option
-		//return 'all';
+
+		if (count(array_unique($tc_type_array)) === 1)
+		{
+			return $tc_type_array[0];
+		}
+		else {
+			return 'other';
+		}
 	}
 }
 
