@@ -107,6 +107,8 @@ class WP_Discord_Post_HTTP {
 		/**
 		** Added by @mymizan to sort orders into different channels 
 		**/
+		$chat_room_webhook_matched = false;
+		$default_webhook = null;
 		if ($context == 'post' && !empty($tm_option))
 		{
 			$discord_option = get_option( 'wp_discord_post_settings_webhooks_input');
@@ -114,8 +116,19 @@ class WP_Discord_Post_HTTP {
 				if (strtolower($value['chatroom']) == strtolower(trim($tm_option)))
 				{
 					$url = $value['webhook'];
+					$chat_room_webhook_matched = true;
 				}
+
+				if (strtolower($value['chatroom']) == 'other')
+				{
+					$default_webhook = $value['webhook'];
+				} 
 			}
+		}
+
+		if ($chat_room_webhook_matched == false && !empty($default_webhook))
+		{
+			$url = $default_webhook; 
 		}
 
 		$this->_webhook_url = esc_url_raw( $url );
