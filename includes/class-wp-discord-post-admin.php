@@ -667,16 +667,11 @@ class WP_Discord_Post_Admin {
 
 		if (empty($value))
 		{
-			$value = array();
-		}
-
-		$new_array = array();
-
-		if (count($value) == 0)
-		{
-			$count = 2;
-		} else {
-			$count = count($value);
+			$value = array(
+				array(
+					'chatroom' => 'general',
+					'webhook'  => '',
+				));
 		}
 
 		echo "<div class='discord_webhook_settings_section'>";

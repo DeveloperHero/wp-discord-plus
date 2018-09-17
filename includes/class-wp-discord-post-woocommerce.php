@@ -361,10 +361,10 @@ class WP_Discord_Post_WooCommerce {
 			);
 		}
 
-		$tm_extra_options = '';
 		$items = $order->get_items();
 		foreach($items as $i)
 		{
+			$tm_extra_options = '';
 			$meta = $i->get_meta_data();
 			foreach( $meta as $m)
 			{
@@ -389,14 +389,14 @@ class WP_Discord_Post_WooCommerce {
 					}
 				}
 			}
-			break;
+			//break;
+
+			$embed['fields'][] = array(
+				'name'   => esc_html__( 'TM Extra Options (' . $i->get_name() . ')', 'wp-discord-post' ),
+				'value'  => esc_html__( "Extra options from TM Plugin. \n" . $tm_extra_options),
+			);
 		}
 		
-
-		$embed['fields'][] = array(
-			'name'   => esc_html__( 'TM Extra Options', 'wp-discord-post' ),
-			'value'  => esc_html__( "Extra options from TM Plugin. \n" . $tm_extra_options),
-		);
 
 		$embed = apply_filters( 'wp_discord_post_order_embed', $embed, $product );
 
