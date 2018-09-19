@@ -1,4 +1,4 @@
-H<?php
+<?php
 /**
  * WP Discord Post WooCommerce
  *
