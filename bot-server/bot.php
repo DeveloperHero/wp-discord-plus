@@ -2,9 +2,15 @@
 //ignore_user_abort(true);
 //set_time_limit(0);
 include __DIR__.'/vendor/autoload.php';
+include __DIR__.'/bot-message.php';
 
-define("BOT_URL", 'http://localhost/wp-admin/admin-ajax.php');
-define("BOT_TOKEN", 'NDkyMjU5ODA3MjQ4NTE1MDcy.DoT0Pg.VUy8DsyUeZ7X_fTbOmdjdjEKA44');
+/**
+**
+** CHANGE THESE THREE VARIABLES
+**/
+define("BOT_URL", 'http://localhost/wp-admin/admin-ajax.php'); //reloace localhost with your WordPress Root.
+define("BOT_TOKEN", 'NDkyMjU5ODA3MjQ4NTE1MDcy.DoT0Pg.VUy8DsyUeZ7X_fTbOmdjdjEKA44'); //bot token from discord
+define("BOT_NONCE", '6609190496'); //unique number to securely communicate 
 
 use Discord\Discord;
 
@@ -17,7 +23,8 @@ $discord->on('ready', function ($discord) {
 
 	// Listen for messages.
 	$discord->on('message', function ($message, $discord) {
-		echo "New message from: " .  $message->author->username . "\n";
+		echo "User: " .  $message->author->username . "\n";
+		echo "User ID: " .  $message->author->id . "\n";
 		echo "Message: " .  $message->content . "\n";
 
 		if ($message->author->user->bot == 0)
@@ -51,7 +58,9 @@ $discord->on('ready', function ($discord) {
 
 				if ($result != 'null' || !empty($result))
 				{
-					$message->reply($result);
+					//$message->reply($result);
+					//$message->author->send('testing');
+					send_dm((int) $message->author->id, $result);
 				}
 
 			} catch(Exception $e) {
