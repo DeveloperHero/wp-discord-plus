@@ -23,10 +23,10 @@ class WP_Discord_Bot {
 
 	public function receive_message_from_discord()
 	{
-		global $wpdb; // this is how you get access to the database
+		$message = trim($_POST['message']);
+
 		if (!empty($_POST['author_id']) && !empty($_POST['author']) && !empty($_POST['message']))
 		{
-			$message = trim($_POST['message']);
 			if (substr($message, 0, 6) == '!claim')
 			{
 				$this->claim_order();
@@ -51,10 +51,16 @@ class WP_Discord_Bot {
 		{
 			$order = wc_get_order((int) $message[1]);
 
+			if (!$order)
+			{
+				echo "Order ID didn't match.";
+				wp_die();
+			}
+
 			if ($order->get_status() == 'completed')
 			{
-				//echo "Order has been completed already.";
-				//wp_die();
+				echo "Order has been completed already.";
+				wp_die();
 			}
 
 			if ($order->get_status() == 'boosting')
@@ -63,7 +69,7 @@ class WP_Discord_Bot {
 				wp_die();
 			}
 
-			if (($current_boosting_order = get_option("discord_" . $_POST['author_id'])) == true)
+			if (($current_boosting_order = get_option("discord_" . $_POST['author_id'])))
 			{
 				echo "Currently claimed order: " . $current_boosting_order;
 				wp_die();
@@ -102,14 +108,25 @@ class WP_Discord_Bot {
 
 				echo $output;
 			}
+		} else {
+			wp_die('Order id missing');
 		}
 
 	}
 
 	public function complete_order()
 	{
+
 		$current_boosting_order = get_option("discord_" . $_POST['author_id']);
+		
 		$order = wc_get_order($current_boosting_order);
+
+		if ($order->get_id())
+		{
+			echo "You have currently no order claimed.";
+			wp_die();
+		}
+
 		$order->set_status('completed');
 		$order->save();
 		$author = delete_option("discord_" . $_POST['author_id']);
