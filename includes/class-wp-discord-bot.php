@@ -49,9 +49,17 @@ class WP_Discord_Bot {
 
 		if (count($message) >=2)
 		{
-			$order = wc_get_order((int) $message[1]);
+			$order_id = intval($message[1]); 
 
-			if (!$order)
+			if ($order_id == 0)
+			{
+				echo "Bad Order Id";
+				wp_die();
+			}
+
+			$order = wc_get_order($order_id);
+
+			if (empty($order->get_status()))
 			{
 				echo "Order ID didn't match.";
 				wp_die();
@@ -75,7 +83,7 @@ class WP_Discord_Bot {
 				wp_die();
 			}
 
-			if ($order)
+			if (!empty($order->get_status()))
 			{
 				$order->set_status('boosting');
 				$order->save();
@@ -85,7 +93,7 @@ class WP_Discord_Bot {
 				$order_data = $order->get_data();
 				$extra_tags = array();
 
-				$output = "\n";
+				$output = "Order ID: " . $order_id . "\n";
 
 				foreach($order_data['meta_data'] as $m)
 				{
@@ -118,10 +126,16 @@ class WP_Discord_Bot {
 	{
 
 		$current_boosting_order = get_option("discord_" . $_POST['author_id']);
+
+		if (empty($current_boosting_order))
+		{
+			echo "You have currently no order claimed.";
+			wp_die();
+		}
 		
 		$order = wc_get_order($current_boosting_order);
 
-		if ($order->get_id())
+		if (empty($order->get_status()))
 		{
 			echo "You have currently no order claimed.";
 			wp_die();
@@ -129,8 +143,13 @@ class WP_Discord_Bot {
 
 		$order->set_status('completed');
 		$order->save();
+
+		//update count for the user
+		$op = get_option("discord_total_count_" . $_POST['author_id'], 0);
+		update_option("discord_total_count_" . $_POST['author_id'], $op+1);
+
 		$author = delete_option("discord_" . $_POST['author_id']);
-		echo "Order #" . $current_boosting_order. " completed\n";
+		echo "Order #" . $current_boosting_order . " completed\n";
 	}
 }
 
