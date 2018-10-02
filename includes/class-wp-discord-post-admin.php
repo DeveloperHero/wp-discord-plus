@@ -412,7 +412,7 @@ class WP_Discord_Post_Admin {
 		$value = get_option( 'wp_discord_post_bot_token' );
 
 		echo '<input type="text" name="wp_discord_post_bot_token" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
-		echo '<span class="description">' . sprintf( esc_html__( 'The token of your Discord bot. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://discordapp.com/developers/docs/intro">', '</a>' ) . '</span>';
+		echo '<span class="description">' . sprintf( esc_html__( 'Bot that will listen for Discord command. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://discordapp.com/developers/docs/intro">', '</a>' ) . '</span>';
 	}
 
 	/**
