@@ -109,10 +109,6 @@ class WP_Discord_Post {
 		require_once( 'includes/class-wp-discord-post-http.php' );
 		require_once( 'includes/class-wp-discord-post-formatting.php' );
 
-		if ( is_admin() ) {
-			require_once( 'includes/class-wp-discord-post-dank-meme.php' );
-		}
-
 		$this->post = require_once( 'includes/class-wp-discord-post-post.php' );
 
 		if ( 'yes' === get_option( 'wp_discord_enabled_for_cf7' ) && class_exists( 'WPCF7' ) ) {
