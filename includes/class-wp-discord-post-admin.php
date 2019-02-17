@@ -633,8 +633,6 @@ class WP_Discord_Post_Admin {
 		$value = get_option( 'wp_discord_post_settings_webhooks_input' );
 		$product_categories = $this->get_woocommerce_product_categories();
 
-		print_r($value);
-
 		if (empty($value))
 		{
 			$value = array(
