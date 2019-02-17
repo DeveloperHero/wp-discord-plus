@@ -127,14 +127,6 @@ class WP_Discord_Post_Admin {
 		);
 
 		add_settings_field(
-			'wp_discord_post_settings_webhooks_tm_target_label',
-			esc_html__( 'TM Field Label', 'wp_discord_post_settings_webhooks_tm_target_label' ),
-			array( $this, 'wp_discord_post_settings_webhooks_tm_target_callback' ),
-			'wp-discord-post',
-			'wp_discord_post_settings_webhooks'
-		);
-
-		add_settings_field(
 			'wp_discord_post_logging',
 			esc_html__( 'Logging', 'wp-discord-post' ),
 			array( $this, 'print_logging_field' ),
@@ -341,29 +333,6 @@ class WP_Discord_Post_Admin {
 			register_setting( 'wp-discord-post', 'wp_discord_enabled_for_woocommerce' );
 		}
 
-		add_settings_section(
-			'wp_discord_post_dank_meme_settings',
-			esc_html__( 'Dank Memes', 'wp-discord-post' ),
-			array( $this, 'settings_callback' ),
-			'wp-discord-post'
-		);
-
-		add_settings_field(
-			'wp_discord_post_giphy_api_key',
-			esc_html__( 'Giphy API Key', 'wp-discord-post' ),
-			array( $this, 'print_giphy_api_key_field' ),
-			'wp-discord-post',
-			'wp_discord_post_dank_meme_settings'
-		);
-
-		add_settings_field(
-			'wp_discord_post_send_dank_meme',
-			esc_html__( 'Hit me!', 'wp-discord-post' ),
-			array( $this, 'print_send_dank_meme_field' ),
-			'wp-discord-post',
-			'wp_discord_post_dank_meme_settings'
-		);
-
 		register_setting( 'wp-discord-post', 'wp_discord_post_bot_username' );
 		register_setting( 'wp-discord-post', 'wp_discord_post_avatar_url' );
 		register_setting( 'wp-discord-post', 'wp_discord_post_bot_token' );
@@ -373,9 +342,7 @@ class WP_Discord_Post_Admin {
 		register_setting( 'wp-discord-post', 'wp_discord_post_disable_embed' );
 		register_setting( 'wp-discord-post', 'wp_discord_post_post_webhook_url' );
 		register_setting( 'wp-discord-post', 'wp_discord_post_message_format' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_giphy_api_key' );
 		register_setting( 'wp-discord-post', 'wp_discord_post_settings_webhooks_input' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_settings_webhooks_tm_target_label');
 	}
 
 	/**
@@ -693,14 +660,6 @@ class WP_Discord_Post_Admin {
 		echo "</div>";
 		echo "<a href='#' onclick=\"var newIndex = jQuery('.discord_webhook_settings_single_section').length + 1; jQuery('.discord_webhook_settings_section').append(jQuery('.discord_webhook_settings_single_section').eq(0).clone()); jQuery('input', jQuery('.discord_webhook_settings_single_section').eq(-1)).val(''); jQuery('.discord_webhook_settings_single_section:last-child').children('input').eq(0).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][chatroom]'); jQuery('.discord_webhook_settings_single_section:last-child').children('input').eq(1).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][webhook]'); return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 55px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
 
-	}
-
-	public function wp_discord_post_settings_webhooks_tm_target_callback()
-	{
-		$value = get_option( 'wp_discord_post_settings_webhooks_tm_target_label' );
-
-		echo '<input type="text" name="wp_discord_post_settings_webhooks_tm_target_label" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
-		echo '<span class="description">' . esc_html__( 'Must be the exact same lebel that is being used on the TP plugin.', 'wp_discord_post_settings_webhooks_tm_target_label' ) . '</span>';
 	}
 }
 
