@@ -135,8 +135,6 @@ class WP_Discord_Post {
 		$this->load_textdomain();
 
 		do_action( 'wp_discord_post_init' );
-		add_action('wp_ajax_discord_bot_run', array($this, 'wp_ajax_bot_run'));
-		add_action('wp_ajax_nopriv_discord_bot_run', array($this, 'wp_ajax_bot_run'));
 	}
 
 	/**
@@ -147,40 +145,6 @@ class WP_Discord_Post {
 		load_textdomain( 'wp-discord-post', WP_LANG_DIR . '/wp-discord-post/discord-post-' . $locale . '.mo' );
 		load_plugin_textdomain( 'wp-discord-post', false, plugin_basename( __DIR__ ) . '/languages' );
 	}
-
-	public function wp_ajax_bot_run()
-	{
-		echo "Maximum execution time is: " . ini_get('max_execution_time') . "\n"; 
-		echo "You need to run the cron script before this interval if you want to keep your bot running..\n";
-
-		$lock_file = plugin_dir_path( __FILE__ ) . 'discord.lock'; 
-
-		$lock = fopen($lock_file, 'c');
-
-		if (!flock($lock, LOCK_EX | LOCK_NB)) {
-
-			wp_die("Scripts in execution already...\n");
-
-		} else {
-
-			require_once( 'bot-server/bot.php' );
-		}
-	}
 }
 
 WP_Discord_Post::instance();
-
-
-// /**
-// ** Ensure that lock is cleaned on shutdown
-// **/
-function wpdiscord_clear_lock()
-{
-	///echo "Bot sutting down: " . time() . "\n";
-	//error_log(time() . ': Sutting down discord bot. Lock file cleaning.');
-	//$lock_file = plugin_dir_path( __FILE__ ) . 'discord.lock'; //clean the lock file when scripts shutsdown
-	//fclose($lock_file);
-	//unlink($lock_file);
-}
-
-register_shutdown_function('wpdiscord_clear_lock'); //clean lock on shut down
