@@ -108,7 +108,6 @@ class WP_Discord_Post {
 		require_once( 'includes/class-wp-discord-post-admin.php' );
 		require_once( 'includes/class-wp-discord-post-http.php' );
 		require_once( 'includes/class-wp-discord-post-formatting.php' );
-		require_once( 'includes/class-wp-discord-bot.php' );
 
 		if ( is_admin() ) {
 			require_once( 'includes/class-wp-discord-post-dank-meme.php' );
