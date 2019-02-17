@@ -120,7 +120,7 @@ class WP_Discord_Post_Admin {
 
 		add_settings_field(
 			'wp_discord_post_settings_webhooks_input',
-			esc_html__( 'Webhook URL', 'wp_discord_post_settings_webhooks_input' ),
+			esc_html__( null, 'wp_discord_post_settings_webhooks_input' ),
 			array( $this, 'wp_discord_post_settings_webhooks_input' ),
 			'wp-discord-post',
 			'wp_discord_post_settings_webhooks'
@@ -616,14 +616,14 @@ class WP_Discord_Post_Admin {
 	 * Prints the description for webhook section.
 	 */
 	public function wp_discord_post_settings_webhooks_callback() {
-		esc_html_e( 'Chatroom and webhook configuration for WooCommerce', 'wp-discord-post' );
+		esc_html_e( 'Channel and webhook configuration for WooCommerce. All is the default channel which is used when no category is matched.', 'wp-discord-post' );
 	}
 
 	/**
 	 * Prints the inputs for webhook section.
 	 */
 	public function wp_discord_post_settings_webhooks_input_callback() {
-		esc_html_e( 'Chatroom and webhook configuration for WooCommerce', 'wp-discord-post' );
+		esc_html_e( 'Channel and webhook configuration for WooCommerce.', 'wp-discord-post' );
 	}
 
 	/**
@@ -671,11 +671,11 @@ class WP_Discord_Post_Admin {
 
 			echo "</select> </div>";
 
-			echo "<div style='width:20%;display:inline-block;'> <label> Chatroom </label>";
+			echo "<div style='width:20%;display:inline-block;'> <label> Channel </label>";
 			echo "<input style='padding:5px; margin: 5px;' name='" . $chatroom_key . "' type='text' value='" . $v['chatroom'] . "'/> </div>";
 
 			echo "<div style='width:50%; display:inline-block;'> <label> Webhook URL </label>";
-			echo "<input style='padding:5px; margin: 5px; width:90%;' name='" . $webhook_key . "' type='text' value='" . $v['webhook'] . "'/> </div></div>";
+			echo "<input style='padding:5px; margin: 5px; width:65%;' name='" . $webhook_key . "' type='text' value='" . $v['webhook'] . "'/> </div></div>";
 		}
 
 		echo "</div>";
