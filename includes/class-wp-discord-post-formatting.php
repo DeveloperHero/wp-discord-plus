@@ -17,10 +17,10 @@ class WP_Discord_Post_Formatting {
 	/**
 	 * Gets the thumbnail for the post.
 	 *
-	 * @param  int    $post_id The post ID.
+	 * @param  int $post_id The post ID.
 	 * @return string
 	 */
-    public static function get_thumbnail( $post_id ) {
+	public static function get_thumbnail( $post_id ) {
 		$thumbnail = '';
 
 		if ( has_post_thumbnail( $post_id ) ) {
@@ -47,7 +47,7 @@ class WP_Discord_Post_Formatting {
 		// Manually generate the excerpt beacuse outside of loop. Uses code from wp_trim_excerpt()
 		$text           = strip_shortcodes( $post->post_content );
 		$text           = apply_filters( 'the_content', $text );
-		$text           = str_replace(']]>', ']]&gt;', $text);
+		$text           = str_replace( ']]>', ']]&gt;', $text );
 		$text           = html_entity_decode( $text );
 		$excerpt_length = apply_filters( 'excerpt_length', 55 );
 		$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '...' );
@@ -82,7 +82,7 @@ class WP_Discord_Post_Formatting {
 				'author'      => array(
 					'name' => ! empty( $embed['author'] ) ? $embed['author'] : get_bloginfo( 'name' ),
 				),
-				'fields' => ! empty( $embed['fields'] ) ? $embed['fields'] : array(),
+				'fields'      => ! empty( $embed['fields'] ) ? $embed['fields'] : array(),
 			),
 		);
 

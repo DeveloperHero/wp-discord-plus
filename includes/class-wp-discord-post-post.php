@@ -37,7 +37,7 @@ class WP_Discord_Post_Post {
 		$embed   = array();
 
 		if ( ! wp_discord_post_is_embed_enabled() ) {
-			$embed   = $this->_prepare_embed( $id, $post );
+			$embed = $this->_prepare_embed( $id, $post );
 		}
 
 		$http = new WP_Discord_Post_HTTP( 'post' );
@@ -57,12 +57,17 @@ class WP_Discord_Post_Post {
 		$current_time = current_time( 'Y-m-d H' );
 
 		if ( wp_discord_post_is_logging_enabled() ) {
-			error_log( print_r( array(
-				'id'           => $id,
-				'status'       => $post_status,
-				'date'         => $post_date,
-				'current_time' => $current_time,
-			), true ) );
+			error_log(
+				print_r(
+					array(
+						'id'           => $id,
+						'status'       => $post_status,
+						'date'         => $post_date,
+						'current_time' => $current_time,
+					),
+					true
+				)
+			);
 		}
 
 		if ( $post_date < $current_time ) {

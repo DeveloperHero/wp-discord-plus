@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool
  */
 function wp_discord_post_is_logging_enabled() {
-    return 'yes' === get_option( 'wp_discord_post_logging' );
+	return 'yes' === get_option( 'wp_discord_post_logging' );
 }
 
 /**
@@ -25,5 +25,5 @@ function wp_discord_post_is_logging_enabled() {
  * @return bool
  */
 function wp_discord_post_is_embed_enabled() {
-    return apply_filters( 'wp_discord_post_embed_enabled', 'yes' === get_option( 'wp_discord_post_disable_embed' ) );
+	return apply_filters( 'wp_discord_post_embed_enabled', 'yes' === get_option( 'wp_discord_post_disable_embed' ) );
 }

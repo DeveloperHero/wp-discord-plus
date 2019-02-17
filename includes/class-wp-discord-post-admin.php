@@ -64,7 +64,7 @@ class WP_Discord_Post_Admin {
 	 * Inits the settings page.
 	 */
 	public function settings_init() {
-		
+
 		add_settings_section(
 			'wp_discord_post_settings',
 			esc_html__( 'General', 'wp-discord-post' ),
@@ -96,86 +96,82 @@ class WP_Discord_Post_Admin {
 		);
 
 		// add_settings_field(
-		// 	'wp_discord_post_bot_token',
-		// 	esc_html__( 'Discord Bot Token', 'wp-discord-post' ),
-		// 	array( $this, 'print_bot_token_field' ),
-		// 	'wp-discord-post',
-		// 	'wp_discord_post_settings'
+		// 'wp_discord_post_bot_token',
+		// esc_html__( 'Discord Bot Token', 'wp-discord-post' ),
+		// array( $this, 'print_bot_token_field' ),
+		// 'wp-discord-post',
+		// 'wp_discord_post_settings'
 		// );
-
 		// Enable support for WooCommerce if it's active.
-		if (class_exists('WooCommerce')) {
+		if ( class_exists( 'WooCommerce' ) ) {
 			add_settings_section(
 				'wp_discord_post_woocommerce_settings',
-				esc_html__('WooCommerce Settings', 'wp-discord-post'),
-				array($this, 'settings_callback'),
+				esc_html__( 'WooCommerce Settings', 'wp-discord-post' ),
+				array( $this, 'settings_callback' ),
 				'wp-discord-post'
 			);
 
 			add_settings_field(
 				'wp_discord_enabled_for_woocommerce_products',
-				esc_html__('Send Products', 'wp-discord-post'),
-				array($this, 'print_enabled_for_woocommerce_products_field'),
+				esc_html__( 'Send Products', 'wp-discord-post' ),
+				array( $this, 'print_enabled_for_woocommerce_products_field' ),
 				'wp-discord-post',
 				'wp_discord_post_woocommerce_settings'
 			);
 
-			if ('yes' === get_option('wp_discord_enabled_for_woocommerce_products')) {
+			if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce_products' ) ) {
 				// add_settings_field(
-				//     'wp_discord_post_product_webhook_url',
-				//     esc_html__( 'Discord Products Webhook URL', 'wp-discord-post' ),
-				//     array( $this, 'print_product_webhook_url_field' ),
-				//     'wp-discord-post',
-				//     'wp_discord_post_woocommerce_settings'
+				// 'wp_discord_post_product_webhook_url',
+				// esc_html__( 'Discord Products Webhook URL', 'wp-discord-post' ),
+				// array( $this, 'print_product_webhook_url_field' ),
+				// 'wp-discord-post',
+				// 'wp_discord_post_woocommerce_settings'
 				// );
-
 				add_settings_field(
 					'wp_discord_product_message_format',
-					esc_html__('Product Message Format', 'wp-discord-post'),
-					array($this, 'print_product_message_format_field'),
+					esc_html__( 'Product Message Format', 'wp-discord-post' ),
+					array( $this, 'print_product_message_format_field' ),
 					'wp-discord-post',
 					'wp_discord_post_woocommerce_settings'
 				);
 
-				register_setting('wp-discord-post', 'wp_discord_post_product_webhook_url');
-				register_setting('wp-discord-post', 'wp_discord_product_message_format');
+				register_setting( 'wp-discord-post', 'wp_discord_post_product_webhook_url' );
+				register_setting( 'wp-discord-post', 'wp_discord_product_message_format' );
 			}
 
 			add_settings_field(
 				'wp_discord_enabled_for_woocommerce',
-				esc_html__('Send Orders', 'wp-discord-post'),
-				array($this, 'print_enabled_for_woocommerce_field'),
+				esc_html__( 'Send Orders', 'wp-discord-post' ),
+				array( $this, 'print_enabled_for_woocommerce_field' ),
 				'wp-discord-post',
 				'wp_discord_post_woocommerce_settings'
 			);
 
-			if ('yes' === get_option('wp_discord_enabled_for_woocommerce')) {
+			if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce' ) ) {
 				// add_settings_field(
-				//     'wp_discord_post_order_webhook_url',
-				//     esc_html__( 'Discord Orders Webhook URL', 'wp-discord-post' ),
-				//     array( $this, 'print_order_webhook_url_field' ),
-				//     'wp-discord-post',
-				//     'wp_discord_post_woocommerce_settings'
+				// 'wp_discord_post_order_webhook_url',
+				// esc_html__( 'Discord Orders Webhook URL', 'wp-discord-post' ),
+				// array( $this, 'print_order_webhook_url_field' ),
+				// 'wp-discord-post',
+				// 'wp_discord_post_woocommerce_settings'
 				// );
-
 				add_settings_field(
 					'wp_discord_order_message_format',
-					esc_html__('Order Message Format', 'wp-discord-post'),
-					array($this, 'print_order_message_format_field'),
+					esc_html__( 'Order Message Format', 'wp-discord-post' ),
+					array( $this, 'print_order_message_format_field' ),
 					'wp-discord-post',
 					'wp_discord_post_woocommerce_settings'
 				);
 
-				//register_setting( 'wp-discord-post', 'wp_discord_post_order_webhook_url' );
-				register_setting('wp-discord-post', 'wp_discord_order_message_format');
+				// register_setting( 'wp-discord-post', 'wp_discord_post_order_webhook_url' );
+				register_setting( 'wp-discord-post', 'wp_discord_order_message_format' );
 			}
 
-			register_setting('wp-discord-post', 'wp_discord_enabled_for_woocommerce_products');
-			register_setting('wp-discord-post', 'wp_discord_enabled_for_woocommerce');
+			register_setting( 'wp-discord-post', 'wp_discord_enabled_for_woocommerce_products' );
+			register_setting( 'wp-discord-post', 'wp_discord_enabled_for_woocommerce' );
 		}
 
-
-		//Webhook confiuration section
+		// Webhook confiuration section
 		add_settings_section(
 			'wp_discord_post_settings_webhooks',
 			esc_html__( 'Channels & Webhooks', 'wp_discord_post_settings_webhooks' ),
@@ -458,10 +454,10 @@ class WP_Discord_Post_Admin {
 	 */
 	public function print_order_message_format_field() {
 		$value       = get_option( 'wp_discord_order_message_format' );
-		$placeholder = __( 'Order #%order_number% by %order_customer% has been created. The order total is %order_total%.', 'wp-discord-post' );
+		$placeholder = __( 'Order #%1$order_number% by %2$order_customer% has been created. The order total is %3$order_total%.', 'wp-discord-post' );
 
 		echo '<textarea style="width:500px;height:150px;" name="wp_discord_order_message_format" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $value ) . '</textarea><br />';
-		echo '<span class="description">' . esc_html__( 'Change the format of the message sent to Discord when a new order is created in WooCommerce. The available placeholders are %order_number%, %order_customer%, and %order_total%.', 'wp-discord-post' ) . '</span>';
+		echo '<span class="description">' . esc_html__( 'Change the format of the message sent to Discord when a new order is created in WooCommerce. The available placeholders are %1$order_number%, %2$order_customer%, and %3$order_total%.', 'wp-discord-post' ) . '</span>';
 	}
 
 	/**
@@ -486,14 +482,14 @@ class WP_Discord_Post_Admin {
 	 * Adds some content to the Privacy Policy default content.
 	 */
 	public function add_privacy_policy_content() {
-	    if ( ! function_exists( 'wp_add_privacy_policy_content' ) ) {
-	        return;
-	    }
+		if ( ! function_exists( 'wp_add_privacy_policy_content' ) ) {
+			return;
+		}
 
 		$content = '';
 
 		if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce' ) ) {
-		    $content .= __( 'When you place an order on this site, we send your order details to discordapp.com.', 'wp-discord-post' );
+			$content .= __( 'When you place an order on this site, we send your order details to discordapp.com.', 'wp-discord-post' );
 		}
 
 		if ( 'yes' === get_option( 'wp_discord_enabled_for_jetpack_cf' ) || 'yes' === get_option( 'wp_discord_enabled_for_cf7' ) ) {
@@ -504,10 +500,10 @@ class WP_Discord_Post_Admin {
 			$content .= sprintf( ' ' . __( 'The discordapp.com privacy policy is <a href="%s" target="_blank">here</a>.', 'wp-discord-post' ), 'https://discordapp.com/privacy' );
 		}
 
-	    wp_add_privacy_policy_content(
-	        'WP Discord Post',
-	        wp_kses_post( wpautop( $content, false ) )
-	    );
+		wp_add_privacy_policy_content(
+			'WP Discord Post',
+			wp_kses_post( wpautop( $content, false ) )
+		);
 	}
 
 	/**
@@ -528,25 +524,24 @@ class WP_Discord_Post_Admin {
 	 * Prints the webhook settings field.
 	 */
 	public function wp_discord_post_settings_webhooks_input() {
-		$value = get_option( 'wp_discord_post_settings_webhooks_input' );
+		$value              = get_option( 'wp_discord_post_settings_webhooks_input' );
 		$product_categories = $this->get_woocommerce_product_categories();
 
-		if (empty($value))
-		{
+		if ( empty( $value ) ) {
 			$value = array(
 				array(
-					'chatroom' => 'general',
-					'webhook'  => '',
+					'chatroom'    => 'general',
+					'webhook'     => '',
 					'category_id' => -1,
-				));
+				),
+			);
 		}
 
 		echo "<div class='discord_webhook_settings_section'>";
 
-		foreach($value as $k => $v)
-		{
-			$chatroom_key = 'wp_discord_post_settings_webhooks_input[' . $k . '][chatroom]'; 
-			$webhook_key  = 'wp_discord_post_settings_webhooks_input[' . $k . '][webhook]'; 
+		foreach ( $value as $k => $v ) {
+			$chatroom_key = 'wp_discord_post_settings_webhooks_input[' . $k . '][chatroom]';
+			$webhook_key  = 'wp_discord_post_settings_webhooks_input[' . $k . '][webhook]';
 			$category_key = 'wp_discord_post_settings_webhooks_input[' . $k . '][category]';
 
 			echo "<div class='discord_webhook_settings_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
@@ -555,19 +550,17 @@ class WP_Discord_Post_Admin {
 			echo "<select name='" . $category_key . "' >";
 			echo "<option value='-1'> All </option>";
 
-			if (!empty($product_categories))
-			{
-				foreach($product_categories as $category)
-				{
+			if ( ! empty( $product_categories ) ) {
+				foreach ( $product_categories as $category ) {
 					$selected = '';
-					if ($v['category'] == $category->term_id) {
+					if ( $v['category'] == $category->term_id ) {
 						$selected = ' selected="selected" ';
 					}
-					echo "<option value='" . $category->term_id . "' " . $selected . ">" . $category->name . " </option>";
+					echo "<option value='" . $category->term_id . "' " . $selected . '>' . $category->name . ' </option>';
 				}
 			}
 
-			echo "</select> </div>";
+			echo '</select> </div>';
 
 			echo "<div style='width:20%;display:inline-block;'> <label> Channel </label>";
 			echo "<input style='padding:5px; margin: 5px;' name='" . $chatroom_key . "' type='text' value='" . $v['chatroom'] . "'/> </div>";
@@ -576,17 +569,18 @@ class WP_Discord_Post_Admin {
 			echo "<input style='padding:5px; margin: 5px; width:65%;' name='" . $webhook_key . "' type='text' value='" . $v['webhook'] . "'/> </div></div>";
 		}
 
-		echo "</div>";
+		echo '</div>';
 		echo "<a href='#' onclick=\"var newIndex = jQuery('.discord_webhook_settings_single_section').length + 1; jQuery('.discord_webhook_settings_section').append(jQuery('.discord_webhook_settings_single_section').eq(0).clone()); jQuery('input', jQuery('.discord_webhook_settings_single_section').eq(-1)).val(''); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(0).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][chatroom]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(1).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][webhook]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][category]');jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).val(-1);return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 113px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
 
 	}
 
-	private function get_woocommerce_product_categories()
-	{
-		return get_terms(array(
-			'taxonomy' => "product_cat",
-			'hide_empty' => false,
-		));
+	private function get_woocommerce_product_categories() {
+		return get_terms(
+			array(
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => false,
+			)
+		);
 	}
 }
 

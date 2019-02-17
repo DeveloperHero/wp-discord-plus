@@ -7,9 +7,9 @@
  *
  * Plugin Name: WP Discord Post Plus
  * Plugin URI:  https: //developerhero.net/plugins/wp-discord-post-plus/
- * Description: A Discord integration that sends a message on your desired Discord server and channel for every new post published. 
+ * Description: A Discord integration that sends a message on your desired Discord server and channel for every new post published.
  * Based on the original plugin WP Discord Post by Nicola Mustone, which is available on the WordPress Directory.
- * 
+ *
  * Version:     2.1.1
  * Author:      Developer Hero
  * Author URI:  https: //developerhero.net/
@@ -104,15 +104,15 @@ class WP_Discord_Post {
 	 * Adds the required hooks.
 	 */
 	public function __construct() {
-		require_once( 'includes/functions-general.php' );
-		require_once( 'includes/class-wp-discord-post-admin.php' );
-		require_once( 'includes/class-wp-discord-post-http.php' );
-		require_once( 'includes/class-wp-discord-post-formatting.php' );
+		require_once 'includes/functions-general.php';
+		require_once 'includes/class-wp-discord-post-admin.php';
+		require_once 'includes/class-wp-discord-post-http.php';
+		require_once 'includes/class-wp-discord-post-formatting.php';
 
-		$this->post = require_once( 'includes/class-wp-discord-post-post.php' );
+		$this->post = require_once 'includes/class-wp-discord-post-post.php';
 
 		if ( class_exists( 'WooCommerce' ) ) {
-			$this->woocommerce = include_once( 'includes/class-wp-discord-post-woocommerce.php' );
+			$this->woocommerce = include_once 'includes/class-wp-discord-post-woocommerce.php';
 		}
 
 		$this->load_textdomain();

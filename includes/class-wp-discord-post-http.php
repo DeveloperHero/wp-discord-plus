@@ -89,9 +89,9 @@ class WP_Discord_Post_HTTP {
 	 * @param string $url     Sets the webhook URL.
 	 * @param string $context The context used for this specific instance.
 	 */
-	public function set_webhook_url( $url = '') {
+	public function set_webhook_url( $url = '' ) {
 		$tm_option = $this->_get_tm_option();
-		$context = $this->get_context();
+		$context   = $this->get_context();
 
 		if ( ! empty( $context ) ) {
 			$specific_url = get_option( 'wp_discord_post_' . sanitize_key( $context ) . '_webhook_url' );
@@ -105,30 +105,26 @@ class WP_Discord_Post_HTTP {
 		$url = apply_filters( 'wp_discord_post_webhook_url', $url );
 
 		/**
-		** Added by @mymizan to sort orders into different channels 
-		**/
+		** Added by @mymizan to sort orders into different channels
+		*/
 		$chat_room_webhook_matched = false;
-		$default_webhook = null;
-		if ($context == 'post' && !empty($tm_option))
-		{
-			$discord_option = get_option( 'wp_discord_post_settings_webhooks_input');
-			foreach ($discord_option as $value) {
-				if (strtolower($value['chatroom']) == strtolower(trim($tm_option)))
-				{
-					$url = $value['webhook'];
+		$default_webhook           = null;
+		if ( $context == 'post' && ! empty( $tm_option ) ) {
+			$discord_option = get_option( 'wp_discord_post_settings_webhooks_input' );
+			foreach ( $discord_option as $value ) {
+				if ( strtolower( $value['chatroom'] ) == strtolower( trim( $tm_option ) ) ) {
+					$url                       = $value['webhook'];
 					$chat_room_webhook_matched = true;
 				}
 
-				if (strtolower($value['chatroom']) == 'other')
-				{
+				if ( strtolower( $value['chatroom'] ) == 'other' ) {
 					$default_webhook = $value['webhook'];
-				} 
+				}
 			}
 		}
 
-		if ($chat_room_webhook_matched == false && !empty($default_webhook))
-		{
-			$url = $default_webhook; 
+		if ( $chat_room_webhook_matched == false && ! empty( $default_webhook ) ) {
+			$url = $default_webhook;
 		}
 
 		$this->_webhook_url = esc_url_raw( $url );
@@ -198,7 +194,7 @@ class WP_Discord_Post_HTTP {
 	 *
 	 * @param string $context The context of the request for this instance.
 	 */
-	public function __construct( $context = '', $tm_option='') {
+	public function __construct( $context = '', $tm_option = '' ) {
 		$this->tm_option = $tm_option;
 		$this->set_context( $context );
 		$this->set_username( get_option( 'wp_discord_post_bot_username' ) );
@@ -254,13 +250,16 @@ class WP_Discord_Post_HTTP {
 
 		$args = apply_filters( 'wp_discord_post_request_body_args', $args );
 
-		$request = apply_filters( 'wp_discord_post_request_args', array(
-			'headers' => array(
-				'Authorization' => 'Bot ' . esc_html( $this->get_token() ),
-				'Content-Type'  => 'application/json',
-			),
-			'body' => wp_json_encode( $args ),
-		) );
+		$request = apply_filters(
+			'wp_discord_post_request_args',
+			array(
+				'headers' => array(
+					'Authorization' => 'Bot ' . esc_html( $this->get_token() ),
+					'Content-Type'  => 'application/json',
+				),
+				'body'    => wp_json_encode( $args ),
+			)
+		);
 
 		if ( wp_discord_post_is_logging_enabled() ) {
 			error_log( print_r( $request, true ) );
@@ -292,8 +291,7 @@ class WP_Discord_Post_HTTP {
 		return false;
 	}
 
-	private function _get_tm_option()
-	{
-		return $this->tm_option;
+	private function _get_tm_option() {
+		 return $this->tm_option;
 	}
 }

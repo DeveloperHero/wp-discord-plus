@@ -30,7 +30,7 @@ class WP_Discord_Post_WooCommerce {
 	/**
 	 * Sends the product to Discord using the specified webhook URL and Bot token.
 	 *
-	 * @param int $id The product ID.
+	 * @param int        $id The product ID.
 	 * @param WC_Product $product The product object.
 	 */
 	public function send_product( $id, $product ) {
@@ -44,7 +44,7 @@ class WP_Discord_Post_WooCommerce {
 		$embed   = array();
 
 		if ( ! wp_discord_post_is_embed_enabled() ) {
-			$embed   = $this->_prepare_product_embed( $id, $product );
+			$embed = $this->_prepare_product_embed( $id, $product );
 		}
 
 		$http = new WP_Discord_Post_HTTP( 'product' );
@@ -57,7 +57,7 @@ class WP_Discord_Post_WooCommerce {
 	 * @param int $order_id The order ID.
 	 */
 	public function send_order( $order_id ) {
-		$order            = wc_get_order( $order_id );
+		$order = wc_get_order( $order_id );
 
 		$allowed_statuses = apply_filters( 'wp_discord_post_allowed_order_statuses', array( 'on-hold', 'processing', 'completed', 'pending' ) );
 
@@ -65,17 +65,14 @@ class WP_Discord_Post_WooCommerce {
 			return false;
 		}
 
-		$content          = $this->_prepare_order_content( $order );
-		$embed            = array();
+		$content = $this->_prepare_order_content( $order );
+		$embed   = array();
 
 		if ( ! wp_discord_post_is_embed_enabled() ) {
-			$embed   = $this->_prepare_order_embed( $order_id, $order );
+			$embed = $this->_prepare_order_embed( $order_id, $order );
 		}
 
-		//todo:: Need to support multiple orders.
-		$tm_option = $this->_get_tm_option($order->get_items());
-
-		$http = new WP_Discord_Post_HTTP( 'post', $tm_option);
+		$http = new WP_Discord_Post_HTTP( 'post' );
 		return $http->process( $content, $embed );
 	}
 
@@ -92,12 +89,17 @@ class WP_Discord_Post_WooCommerce {
 		$current_time = current_time( 'Y-m-d H' );
 
 		if ( wp_discord_post_is_logging_enabled() ) {
-			error_log( print_r( array(
-				'id'           => $id,
-				'status'       => $post_status,
-				'date'         => $post_date,
-				'current_time' => $current_time,
-			), true ) );
+			error_log(
+				print_r(
+					array(
+						'id'           => $id,
+						'status'       => $post_status,
+						'date'         => $post_date,
+						'current_time' => $current_time,
+					),
+					true
+				)
+			);
 		}
 
 		if ( $post_date < $current_time ) {
@@ -239,7 +241,7 @@ class WP_Discord_Post_WooCommerce {
 
 		$embed['fields'][] = array(
 			'name'  => esc_html__( 'Additional Info', 'wp-discord-post' ),
-			'value' => esc_html__( 'Here are additional information of this product.'),
+			'value' => esc_html__( 'Here are additional information of this product.' ),
 		);
 
 		if ( ! $product->is_virtual() ) {
@@ -262,14 +264,14 @@ class WP_Discord_Post_WooCommerce {
 
 		if ( ! empty( wc_get_product_category_list( $product->get_id() ) ) ) {
 			$embed['fields'][] = array(
-				'name' => esc_html__( 'Categories', 'wp-discord-post' ),
+				'name'  => esc_html__( 'Categories', 'wp-discord-post' ),
 				'value' => strip_tags( wc_get_product_category_list( $product->get_id(), ', ' ) ),
 			);
 		}
 
 		if ( ! empty( wc_get_product_tag_list( $product->get_id() ) ) ) {
 			$embed['fields'][] = array(
-				'name' => esc_html__( 'Tags', 'wp-discord-post' ),
+				'name'  => esc_html__( 'Tags', 'wp-discord-post' ),
 				'value' => strip_tags( wc_get_product_tag_list( $product->get_id(), ', ' ) ),
 			);
 		}
@@ -289,19 +291,19 @@ class WP_Discord_Post_WooCommerce {
 	 */
 	protected function _prepare_order_embed( $order_id, $order ) {
 		$embed = array(
-			'title'       => sprintf( esc_html__( 'Order #%d', 'wp-discord-post' ), strip_tags( $order->get_order_number() ) ),
-			'url'         => $order->get_edit_order_url(),
-			'timestamp'   => get_the_date( 'c', $order_id ),
-			'author'      => esc_html( $order->get_formatted_billing_full_name() ),
-			'fields'      => array(),
+			'title'     => sprintf( esc_html__( 'Order #%d', 'wp-discord-post' ), strip_tags( $order->get_order_number() ) ),
+			'url'       => $order->get_edit_order_url(),
+			'timestamp' => get_the_date( 'c', $order_id ),
+			'author'    => esc_html( $order->get_formatted_billing_full_name() ),
+			'fields'    => array(),
 		);
 
 		if ( 0 < $order->get_item_count() ) {
 			$items = $order->get_items();
 
 			$embed['fields'][] = array(
-				'name'   => esc_html__( 'Order Summary', 'wp-discord-post' ),
-				'value'  => sprintf( esc_html( _n( 'Your customer purchased the following item.', 'Your customer purchased the following %d items.', $order->get_item_count(), 'wp-discord-post' ) ), $order->get_item_count() ),
+				'name'  => esc_html__( 'Order Summary', 'wp-discord-post' ),
+				'value' => sprintf( esc_html( _n( 'Your customer purchased the following item.', 'Your customer purchased the following %d items.', $order->get_item_count(), 'wp-discord-post' ) ), $order->get_item_count() ),
 			);
 
 			foreach ( $items as $item ) {
@@ -314,14 +316,14 @@ class WP_Discord_Post_WooCommerce {
 		}
 
 		$embed['fields'][] = array(
-			'name'   => esc_html__( 'Totals', 'wp-discord-post' ),
-			'value'  => esc_html__( 'The order totals, including shipping costs and taxes, if any.','wp-discord-post' ),
+			'name'  => esc_html__( 'Totals', 'wp-discord-post' ),
+			'value' => esc_html__( 'The order totals, including shipping costs and taxes, if any.', 'wp-discord-post' ),
 		);
 
 		if ( $order->needs_processing() ) {
 			$embed['fields'][] = array(
 				'name'   => esc_html__( 'Shipping Total', 'wp-discord-post' ),
-				'value'  => html_entity_decode( strip_tags( wc_price( $order->get_shipping_total() ) ) ) . ' ' . esc_html__( 'via','wp-discord-post' ) . ' ' . strip_tags( $order->get_shipping_method() ),
+				'value'  => html_entity_decode( strip_tags( wc_price( $order->get_shipping_total() ) ) ) . ' ' . esc_html__( 'via', 'wp-discord-post' ) . ' ' . strip_tags( $order->get_shipping_method() ),
 				'inline' => true,
 			);
 		}
@@ -341,8 +343,8 @@ class WP_Discord_Post_WooCommerce {
 		);
 
 		$embed['fields'][] = array(
-			'name'   => esc_html__( 'Customer Data', 'wp-discord-post' ),
-			'value'  => esc_html__( 'These are the billing and shipping details of your customer.','wp-discord-post' ),
+			'name'  => esc_html__( 'Customer Data', 'wp-discord-post' ),
+			'value' => esc_html__( 'These are the billing and shipping details of your customer.', 'wp-discord-post' ),
 		);
 
 		if ( $order->has_billing_address() ) {
@@ -361,78 +363,9 @@ class WP_Discord_Post_WooCommerce {
 			);
 		}
 
-		$items = $order->get_items();
-		foreach($items as $i)
-		{
-			$tm_extra_options = '';
-			$meta = $i->get_meta_data();
-			foreach( $meta as $m)
-			{
-				$meta_array = $m->get_data();
-				if ($meta_array['key'] == '_tmcartepo_data')
-				{
-					foreach($meta_array['value'] as $mv)
-					{
-						if (!empty($mv['name']))
-						{
-							$name = $mv['name']; 
-						} else {
-							$name = "(No Name)"; 
-						}
-
-						if (!empty($mv['value'])){
-							$value = $mv['value'];
-						} else {
-							$value = "(No Value)";
-						}
-						$tm_extra_options .= $name . ": " . $value . "\n";
-					}
-				}
-			}
-			//break;
-
-			$embed['fields'][] = array(
-				'name'   => esc_html__( 'TM Extra Options (' . $i->get_name() . ')', 'wp-discord-post' ),
-				'value'  => esc_html__( "Extra options from TM Plugin. \n" . $tm_extra_options),
-			);
-		}
-		
-
 		$embed = apply_filters( 'wp_discord_post_order_embed', $embed, $product );
 
 		return $embed;
-	}
-
-	public function _get_tm_option($order_items)
-	{
-		$tc_type_array = array();
-		$tc_label = get_option('wp_discord_post_settings_webhooks_tm_target_label');
-		foreach($order_items as $item)
-		{
-			$meta = $item->get_meta_data();
-			foreach( $meta as $m)
-			{
-				$meta_array = $m->get_data();
-				if ($meta_array['key'] == '_tmcartepo_data')
-				{
-					foreach($meta_array['value'] as $mv)
-					{
-						if ($mv['name'] == $tc_label)
-						{
-							$tc_type_array[] =  strtolower($mv['value']);
-						}
-					}
-				}
-			}
-		}
-
-		if (count(array_unique($tc_type_array)) === 1)
-		{
-			return $tc_type_array[0];
-		}
-		else {
-			return 'other';
-		}
 	}
 }
 
