@@ -1,5 +1,5 @@
-=== WP Discord Post ===
-Contributors: nicolamustone
+=== WP Discord Post Plus ===
+Contributors: nicolamustone, mymizan, devhero
 Tags: discord, post, publish, server, chat, gaming, streaming, twitch, community, blog, woocommerce, contact form 7, jetpack
 Requires at least: 4.4
 Tested up to: 4.9.7
@@ -7,7 +7,7 @@ Stable tag: 2.1.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WP Discord Post uses a Discord bot and Webhook URL to write in a channel in a Discord server when a post is published on a blog.
+WP Discord Post Plus uses a Discord bot and Webhook URL to write in a channel in a Discord server when a post is published on a blog.
 
 == Description ==
 
