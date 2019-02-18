@@ -25,6 +25,11 @@ class WP_Discord_Post_WooCommerce {
 		if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce' ) ) {
 			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'send_order' ), 15 );
 		}
+
+		/**
+		 ** Add webhook URL filter to send orders to different channels based on the category
+		 **/
+		add_filter('wp_discord_post_webhook_url', array($this, 'set_webhook_url'), 10, 2);
 	}
 
 	/**
@@ -72,7 +77,7 @@ class WP_Discord_Post_WooCommerce {
 			$embed = $this->_prepare_order_embed( $order_id, $order );
 		}
 
-		$http = new WP_Discord_Post_HTTP( 'post' );
+		$http = new WP_Discord_Post_HTTP( 'post', $order_id );
 		return $http->process( $content, $embed );
 	}
 
@@ -366,6 +371,54 @@ class WP_Discord_Post_WooCommerce {
 		$embed = apply_filters( 'wp_discord_post_order_embed', $embed, $product );
 
 		return $embed;
+	}
+
+	public function set_webhook_url($url, $order_id = 0)
+	{
+		error_log('-------- REQUEST FIRED --------');
+		error_log('ORDER ID SENT: ' . $order_id);
+		error_log('URL SENT: ' . $url);
+
+		if ($order_id === 0)
+			return $url;
+		
+		$order = wc_get_order($order_id);
+
+		if (! $order) {
+			return $url;
+		}
+
+		foreach ($order->get_items() as $item_id => $item_product) {
+			$product = $item_product->get_product();
+			$category_ids = $product->get_category_ids();
+
+			if (!empty($category_ids)) {
+				$webhook =  $this->get_category_webhook($category_ids[0]);
+				if (!empty($webhook)) {
+					return $webhook;
+				}
+			}
+		}
+		
+		return $url;
+	}
+
+	private function get_category_webhook($category_id)
+	{
+		$option = get_option('wp_discord_post_settings_webhooks_input');
+		$all = null;
+
+		foreach($option as $o) {
+			if ($o['category'] == $category_id){
+				return $o['webhook'];
+			}
+
+			if ($o['category'] == -1) {
+				$all = $o['webhook'];
+			}
+		}
+
+		return $all;
 	}
 }
 

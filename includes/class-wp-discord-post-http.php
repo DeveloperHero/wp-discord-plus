@@ -82,6 +82,14 @@ class WP_Discord_Post_HTTP {
 	}
 
 	/**
+	 * WooCommerce Order ID
+	 *
+	 * @var integer
+	 * @access private
+	 */
+	public $order_id = 0;
+
+	/**
 	 * Sets the  webhook URL.
 	 *
 	 * @param string $url     Sets the webhook URL.
@@ -97,9 +105,9 @@ class WP_Discord_Post_HTTP {
 				$url = $specific_url;
 			}
 		}
-
-		$url = apply_filters( 'wp_discord_post_' . sanitize_key( $context ) . '_webhook_url', $url );
-		$url = apply_filters( 'wp_discord_post_webhook_url', $url );
+		
+		$url = apply_filters( 'wp_discord_post_' . sanitize_key( $context ) . '_webhook_url', $url);
+		$url = apply_filters( 'wp_discord_post_webhook_url', $url, $this->order_id );
 
 		$this->_webhook_url = esc_url_raw( $url );
 	}
@@ -168,7 +176,8 @@ class WP_Discord_Post_HTTP {
 	 *
 	 * @param string $context The context of the request for this instance.
 	 */
-	public function __construct( $context = '') {
+	public function __construct( $context = '', $order_id = 0) {
+		$this->order_id = $order_id;
 		$this->set_context( $context );
 		$this->set_username( get_option( 'wp_discord_post_bot_username' ) );
 		$this->set_avatar( get_option( 'wp_discord_post_avatar_url' ) );
