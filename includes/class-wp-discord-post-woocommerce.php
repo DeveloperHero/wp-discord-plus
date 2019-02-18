@@ -375,10 +375,6 @@ class WP_Discord_Post_WooCommerce {
 
 	public function set_webhook_url($url, $order_id = 0)
 	{
-		error_log('-------- REQUEST FIRED --------');
-		error_log('ORDER ID SENT: ' . $order_id);
-		error_log('URL SENT: ' . $url);
-
 		if ($order_id === 0)
 			return $url;
 		
@@ -399,7 +395,7 @@ class WP_Discord_Post_WooCommerce {
 				}
 			}
 		}
-		
+
 		return $url;
 	}
 
