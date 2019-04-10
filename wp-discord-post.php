@@ -10,10 +10,10 @@
  * Description: A Discord integration that sends a message on your desired Discord server and channel for every new post published.
  * Based on the original plugin WP Discord Post by Nicola Mustone, which is available on the WordPress Directory.
  *
- * Version:     2.1.1
+ * Version:     2.1.3
  * Author:      Developer Hero
  * Author URI:  https://developerhero.net/
- * Text Domain: wp-discord-post
+ * Text Domain: wp-discord-post-plus
  *
  * WC tested up to: 3.5
  *
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Main class of the plugin WP Discord Post. Handles the bot and the admin settings.
  */
-class WP_Discord_Post {
+class WP_Discord_Post_Plus {
 	/**
 	 * The single instance of the class.
 	 *
@@ -90,14 +90,14 @@ class WP_Discord_Post {
 	 * Cloning is forbidden.
 	 */
 	public function __clone() {
-		doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wp-discord-post' ), '1.0.9' );
+		doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wp-discord-post-plus' ), '1.0.9' );
 	}
 
 	/**
 	 * Unserializing instances of this class is forbidden.
 	 */
 	public function __wakeup() {
-		doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wp-discord-post' ), '1.0.9' );
+		doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wp-discord-post-plus' ), '1.0.9' );
 	}
 
 	/**
@@ -117,17 +117,17 @@ class WP_Discord_Post {
 
 		$this->load_textdomain();
 
-		do_action( 'wp_discord_post_init' );
+		do_action( 'wp_discord_post_plus_init' );
 	}
 
 	/**
 	 * Loads the plugin localization files.
 	 */
 	public function load_textdomain() {
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-discord-post' );
-		load_textdomain( 'wp-discord-post', WP_LANG_DIR . '/wp-discord-post/discord-post-' . $locale . '.mo' );
-		load_plugin_textdomain( 'wp-discord-post', false, plugin_basename( __DIR__ ) . '/languages' );
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-discord-post-plus' );
+		load_textdomain( 'wp-discord-post-plus', WP_LANG_DIR . '/wp-discord-post/discord-post-plus-' . $locale . '.mo' );
+		load_plugin_textdomain( 'wp-discord-post-plus', false, plugin_basename( __DIR__ ) . '/languages' );
 	}
 }
 
-WP_Discord_Post::instance();
+WP_Discord_Post_Plus::instance();

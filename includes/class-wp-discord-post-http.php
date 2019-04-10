@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Discord Post HTTP
+ * WP Discord Post Plus HTTP
  *
  * @author      Nicola Mustone
  * @license     GPL-2.0+
@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Main class of the requests handler for WP Discord Post.
+ * Main class of the requests handler for WP Discord Post Plus.
  */
-class WP_Discord_Post_HTTP {
+class WP_Discord_Post_Plus_HTTP {
 	/**
 	 * The bot username.
 	 *
@@ -99,15 +99,15 @@ class WP_Discord_Post_HTTP {
 		$context   = $this->get_context();
 
 		if ( ! empty( $context ) ) {
-			$specific_url = get_option( 'wp_discord_post_' . sanitize_key( $context ) . '_webhook_url' );
+			$specific_url = get_option( 'wp_discord_post_plus_' . sanitize_key( $context ) . '_webhook_url' );
 
 			if ( ! empty( $specific_url ) && empty( $url ) ) {
 				$url = $specific_url;
 			}
 		}
 		
-		$url = apply_filters( 'wp_discord_post_' . sanitize_key( $context ) . '_webhook_url', $url);
-		$url = apply_filters( 'wp_discord_post_webhook_url', $url, $this->order_id );
+		$url = apply_filters( 'wp_discord_post_plus_' . sanitize_key( $context ) . '_webhook_url', $url);
+		$url = apply_filters( 'wp_discord_post_plus_webhook_url', $url, $this->order_id );
 
 		$this->_webhook_url = esc_url_raw( $url );
 	}
@@ -179,10 +179,10 @@ class WP_Discord_Post_HTTP {
 	public function __construct( $context = '', $order_id = 0) {
 		$this->order_id = $order_id;
 		$this->set_context( $context );
-		$this->set_username( get_option( 'wp_discord_post_bot_username' ) );
-		$this->set_avatar( get_option( 'wp_discord_post_avatar_url' ) );
-		$this->set_token( get_option( 'wp_discord_post_bot_token' ) );
-		$this->set_webhook_url( get_option( 'wp_discord_post_webhook_url' ) );
+		$this->set_username( get_option( 'wp_discord_post_plus_bot_username' ) );
+		$this->set_avatar( get_option( 'wp_discord_post_plus_avatar_url' ) );
+		$this->set_token( get_option( 'wp_discord_post_plus_bot_token' ) );
+		$this->set_webhook_url( get_option( 'wp_discord_post_plus_webhook_url' ) );
 	}
 
 	/**
@@ -197,14 +197,14 @@ class WP_Discord_Post_HTTP {
 		$response = $this->_send_request( $content, $embed );
 
 		if ( ! is_wp_error( $response ) ) {
-			if ( wp_discord_post_is_logging_enabled() ) {
-				error_log( 'WP Discord Post - Request sent.' );
+			if ( wp_discord_post_plus_is_logging_enabled() ) {
+				error_log( 'WP Discord Post Plus - Request sent.' );
 			}
 
 			$this->_set_post_meta( $id );
 		} else {
-			if ( wp_discord_post_is_logging_enabled() ) {
-				error_log( sprintf( 'WP Discord Post - Request not sent. %s', $response->get_error_message() ) );
+			if ( wp_discord_post_plus_is_logging_enabled() ) {
+				error_log( sprintf( 'WP Discord Post Plus - Request not sent. %s', $response->get_error_message() ) );
 			}
 		}
 
@@ -227,13 +227,13 @@ class WP_Discord_Post_HTTP {
 		);
 
 		if ( ! empty( $embed ) ) {
-			$args['embeds'] = WP_Discord_Post_Formatting::get_embed( $embed );
+			$args['embeds'] = WP_Discord_Post_plus_Formatting::get_embed( $embed );
 		}
 
-		$args = apply_filters( 'wp_discord_post_request_body_args', $args );
+		$args = apply_filters( 'wp_discord_post_plus_request_body_args', $args );
 
 		$request = apply_filters(
-			'wp_discord_post_request_args',
+			'wp_discord_post_plus_request_args',
 			array(
 				'headers' => array(
 					'Authorization' => 'Bot ' . esc_html( $this->get_token() ),
@@ -243,15 +243,15 @@ class WP_Discord_Post_HTTP {
 			)
 		);
 
-		if ( wp_discord_post_is_logging_enabled() ) {
+		if ( wp_discord_post_plus_is_logging_enabled() ) {
 			error_log( print_r( $request, true ) );
 		}
 
-		do_action( 'wp_discord_post_before_request', $request, $this->get_webhook_url() );
+		do_action( 'wp_discord_post_plus_before_request', $request, $this->get_webhook_url() );
 
 		$response = wp_remote_post( esc_url( $this->get_webhook_url() ), $request );
 
-		do_action( 'wp_discord_post_after_request', $response );
+		do_action( 'wp_discord_post_plus_after_request', $response );
 
 		return $response;
 	}
@@ -267,7 +267,7 @@ class WP_Discord_Post_HTTP {
 		$id = intval( $id );
 
 		if ( 0 !== $id ) {
-			return add_post_meta( $id, '_wp_discord_post_published', 'yes' );
+			return add_post_meta( $id, '_wp_discord_post_plus_published', 'yes' );
 		}
 
 		return false;

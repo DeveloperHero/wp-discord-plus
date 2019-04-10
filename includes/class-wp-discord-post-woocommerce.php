@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Discord Post WooCommerce
+ * WP Discord Post Plus WooCommerce
  *
  * @author      Nicola Mustone
  * @license     GPL-2.0+
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Main class of the compatibility with WooCommerce.
  */
-class WP_Discord_Post_WooCommerce {
+class WP_Discord_Post_plus_WooCommerce_Plus {
 	/**
 	 * Adds the required hooks.
 	 */
@@ -29,7 +29,7 @@ class WP_Discord_Post_WooCommerce {
 		/**
 		 ** Add webhook URL filter to send orders to different channels based on the category
 		 **/
-		add_filter('wp_discord_post_webhook_url', array($this, 'set_webhook_url'), 10, 2);
+		add_filter('wp_discord_post_plus_webhook_url', array($this, 'set_webhook_url'), 10, 2);
 	}
 
 	/**
@@ -40,7 +40,7 @@ class WP_Discord_Post_WooCommerce {
 	 */
 	public function send_product( $id, $product ) {
 		// Check if the product has been already published and if it should be processed.
-		if ( ! apply_filters( 'wp_discord_post_is_new_product', $this->is_new_product( $product ) ) ) {
+		if ( ! apply_filters( 'wp_discord_post_plus_is_new_product', $this->is_new_product( $product ) ) ) {
 			return;
 		}
 
@@ -48,11 +48,11 @@ class WP_Discord_Post_WooCommerce {
 		$content = $this->_prepare_product_content( $product );
 		$embed   = array();
 
-		if ( ! wp_discord_post_is_embed_enabled() ) {
+		if ( ! wp_discord_post_plus_is_embed_enabled() ) {
 			$embed = $this->_prepare_product_embed( $id, $product );
 		}
 
-		$http = new WP_Discord_Post_HTTP( 'product' );
+		$http = new WP_Discord_Post_plus_HTTP( 'product' );
 		return $http->process( $content, $embed, $id );
 	}
 
@@ -64,7 +64,7 @@ class WP_Discord_Post_WooCommerce {
 	public function send_order( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		$allowed_statuses = apply_filters( 'wp_discord_post_allowed_order_statuses', array( 'on-hold', 'processing', 'completed', 'pending' ) );
+		$allowed_statuses = apply_filters( 'wp_discord_post_plus_allowed_order_statuses', array( 'on-hold', 'processing', 'completed', 'pending' ) );
 
 		if ( ! in_array( $order->get_status(), $allowed_statuses ) ) {
 			return false;
@@ -73,11 +73,11 @@ class WP_Discord_Post_WooCommerce {
 		$content = $this->_prepare_order_content( $order );
 		$embed   = array();
 
-		if ( ! wp_discord_post_is_embed_enabled() ) {
+		if ( ! wp_discord_post_plus_is_embed_enabled() ) {
 			$embed = $this->_prepare_order_embed( $order_id, $order );
 		}
 
-		$http = new WP_Discord_Post_HTTP( 'post', $order_id );
+		$http = new WP_Discord_Post_plus_HTTP( 'post', $order_id );
 		return $http->process( $content, $embed );
 	}
 
@@ -93,7 +93,7 @@ class WP_Discord_Post_WooCommerce {
 		$post_date    = date( 'Y-m-d H', strtotime( $product->post_date ) );
 		$current_time = current_time( 'Y-m-d H' );
 
-		if ( wp_discord_post_is_logging_enabled() ) {
+		if ( wp_discord_post_plus_is_logging_enabled() ) {
 			error_log(
 				print_r(
 					array(
@@ -108,17 +108,17 @@ class WP_Discord_Post_WooCommerce {
 		}
 
 		if ( $post_date < $current_time ) {
-			if ( wp_discord_post_is_logging_enabled() ) {
-				error_log( sprintf( 'WP Discord Post - Product %d is not a new product. Skipping.', $id ) );
+			if ( wp_discord_post_plus_is_logging_enabled() ) {
+				error_log( sprintf( 'WP Discord Post Plus - Product %d is not a new product. Skipping.', $id ) );
 			}
 
 			return false;
 		} else {
-			if ( wp_discord_post_is_logging_enabled() ) {
-				error_log( sprintf( 'WP Discord Post - Product %d maybe is new. _wp_discord_post_published = %d', $id, (int) 'yes' === get_post_meta( $id, '_wp_discord_post_published', true ) ) );
+			if ( wp_discord_post_plus_is_logging_enabled() ) {
+				error_log( sprintf( 'WP Discord Post Plus - Product %d maybe is new. _wp_discord_post_plus_published = %d', $id, (int) 'yes' === get_post_meta( $id, '_wp_discord_post_plus_published', true ) ) );
 			}
 
-			return 'yes' !== get_post_meta( $id, '_wp_discord_post_published', true ) && ! wp_is_post_revision( $id );
+			return 'yes' !== get_post_meta( $id, '_wp_discord_post_plus_published', true ) && ! wp_is_post_revision( $id );
 		}
 	}
 
@@ -129,7 +129,7 @@ class WP_Discord_Post_WooCommerce {
 	 * @return string
 	 */
 	protected function _prepare_product_content( $product ) {
-		$mention_everyone = get_option( 'wp_discord_post_mention_everyone' );
+		$mention_everyone = get_option( 'wp_discord_post_plus_mention_everyone' );
 		$message_format   = get_option( 'wp_discord_product_message_format' );
 
 		$content = str_replace(
@@ -146,7 +146,7 @@ class WP_Discord_Post_WooCommerce {
 			$content = '@everyone ' . $content;
 		}
 
-		$content = apply_filters( 'wp_discord_post_product_content', $content, $product );
+		$content = apply_filters( 'wp_discord_post_plus_product_content', $content, $product );
 
 		return $content;
 	}
@@ -162,8 +162,8 @@ class WP_Discord_Post_WooCommerce {
 		$order_total    = html_entity_decode( strip_tags( $order->get_formatted_order_total() ) );
 		$order_customer = esc_html( $order->get_formatted_billing_full_name() );
 
-		$mention_everyone = get_option( 'wp_discord_post_mention_everyone' );
-		$message_format   = get_option( 'wp_discord_order_message_format' );
+		$mention_everyone = get_option( 'wp_discord_post_plus_mention_everyone' );
+		$message_format   = get_option( 'wp_discord_order_plus_plus_message_format' );
 
 		$content = str_replace(
 			array( '%order_number%', '%order_total%', '%order_customer%' ),
@@ -179,7 +179,7 @@ class WP_Discord_Post_WooCommerce {
 			$content = '@everyone ' . $content;
 		}
 
-		$content = apply_filters( 'wp_discord_post_woocommerce_order_content', $content, $order );
+		$content = apply_filters( 'wp_discord_post_plus_woocommerce_plus_order_content', $content, $order );
 
 		return $content;
 	}
@@ -193,7 +193,7 @@ class WP_Discord_Post_WooCommerce {
 	 * @return array
 	 */
 	protected function _prepare_product_embed( $id, $product ) {
-		$thumbnail = WP_Discord_Post_Formatting::get_thumbnail( $id );
+		$thumbnail = WP_Discord_Post_plus_Formatting::get_thumbnail( $id );
 		$embed     = array(
 			'title'       => $product->get_name(),
 			'description' => strip_tags( $product->get_short_description() ),
@@ -281,7 +281,7 @@ class WP_Discord_Post_WooCommerce {
 			);
 		}
 
-		$embed = apply_filters( 'wp_discord_post_product_embed', $embed, $product );
+		$embed = apply_filters( 'wp_discord_post_plus_product_embed', $embed, $product );
 
 		return $embed;
 	}
@@ -368,7 +368,7 @@ class WP_Discord_Post_WooCommerce {
 			);
 		}
 
-		$embed = apply_filters( 'wp_discord_post_order_embed', $embed, $product );
+		$embed = apply_filters( 'wp_discord_post_plus_order_embed', $embed, $product );
 
 		return $embed;
 	}
@@ -401,7 +401,7 @@ class WP_Discord_Post_WooCommerce {
 
 	private function get_category_webhook($category_id)
 	{
-		$option = get_option('wp_discord_post_settings_webhooks_input');
+		$option = get_option('wp_discord_post_plus_settings_webhooks_input');
 		$all = null;
 
 		foreach($option as $o) {
@@ -418,4 +418,4 @@ class WP_Discord_Post_WooCommerce {
 	}
 }
 
-return new WP_Discord_Post_WooCommerce();
+return new WP_Discord_Post_plus_WooCommerce_Plus();

@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Discord Post Admin
+ * WP Discord Post Plus Admin
  *
  * @author      Nicola Mustone
  * @license     GPL-2.0+
@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Main class for the admin settings of WP Discord Post.
+ * Main class for the admin settings of WP Discord Post Plus.
  */
-class WP_Discord_Post_Admin {
+class WP_Discord_Post_Plus_Admin {
 	/**
 	 * Inits the admin panel.
 	 */
@@ -24,12 +24,12 @@ class WP_Discord_Post_Admin {
 	}
 
 	/**
-	 * Adds the menu Settings > WP Discord Post.
+	 * Adds the menu Settings > WP Discord Post Plus.
 	 */
 	public function add_menu() {
 		add_options_page(
-			__( 'WP Discord Post Settings', 'wp-discord-post' ),
-			__( 'WP Discord Post', 'wp-discord-post' ),
+			__( 'WP Discord Post Plus Settings', 'wp-discord-post' ),
+			__( 'WP Discord Post Plus', 'wp-discord-post' ),
 			'manage_options',
 			'wp-discord-post',
 			array( $this, 'settings_page_html' )
@@ -66,46 +66,46 @@ class WP_Discord_Post_Admin {
 	public function settings_init() {
 
 		add_settings_section(
-			'wp_discord_post_settings',
+			'wp_discord_post_plus_settings',
 			esc_html__( 'General', 'wp-discord-post' ),
 			array( $this, 'settings_callback' ),
 			'wp-discord-post'
 		);
 
 		add_settings_section(
-			'wp_discord_post_post_settings',
+			'wp_discord_post_plus_post_settings',
 			esc_html__( 'Posts Settings', 'wp-discord-post' ),
 			array( $this, 'settings_callback' ),
 			'wp-discord-post'
 		);
 
 		add_settings_field(
-			'wp_discord_post_bot_username',
+			'wp_discord_post_plus_bot_username',
 			esc_html__( 'Bot Username', 'wp-discord-post' ),
 			array( $this, 'print_bot_username_field' ),
 			'wp-discord-post',
-			'wp_discord_post_settings'
+			'wp_discord_post_plus_settings'
 		);
 
 		add_settings_field(
-			'wp_discord_post_avatar_url',
+			'wp_discord_post_plus_avatar_url',
 			esc_html__( 'Avatar URL', 'wp-discord-post' ),
 			array( $this, 'print_avatar_url_field' ),
 			'wp-discord-post',
-			'wp_discord_post_settings'
+			'wp_discord_post_plus_settings'
 		);
 
 		// add_settings_field(
-		// 'wp_discord_post_bot_token',
+		// 'wp_discord_post_plus_bot_token',
 		// esc_html__( 'Discord Bot Token', 'wp-discord-post' ),
 		// array( $this, 'print_bot_token_field' ),
 		// 'wp-discord-post',
-		// 'wp_discord_post_settings'
+		// 'wp_discord_post_plus_settings'
 		// );
 		// Enable support for WooCommerce if it's active.
 		if ( class_exists( 'WooCommerce' ) ) {
 			add_settings_section(
-				'wp_discord_post_woocommerce_settings',
+				'wp_discord_post_plus_woocommerce_settings',
 				esc_html__( 'WooCommerce Settings', 'wp-discord-post' ),
 				array( $this, 'settings_callback' ),
 				'wp-discord-post'
@@ -116,26 +116,26 @@ class WP_Discord_Post_Admin {
 				esc_html__( 'Send Products', 'wp-discord-post' ),
 				array( $this, 'print_enabled_for_woocommerce_products_field' ),
 				'wp-discord-post',
-				'wp_discord_post_woocommerce_settings'
+				'wp_discord_post_plus_woocommerce_settings'
 			);
 
 			if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce_products' ) ) {
 				// add_settings_field(
-				// 'wp_discord_post_product_webhook_url',
+				// 'wp_discord_post_plus_product_webhook_url',
 				// esc_html__( 'Discord Products Webhook URL', 'wp-discord-post' ),
 				// array( $this, 'print_product_webhook_url_field' ),
 				// 'wp-discord-post',
-				// 'wp_discord_post_woocommerce_settings'
+				// 'wp_discord_post_plus_woocommerce_settings'
 				// );
 				add_settings_field(
 					'wp_discord_product_message_format',
 					esc_html__( 'Product Message Format', 'wp-discord-post' ),
 					array( $this, 'print_product_message_format_field' ),
 					'wp-discord-post',
-					'wp_discord_post_woocommerce_settings'
+					'wp_discord_post_plus_woocommerce_settings'
 				);
 
-				register_setting( 'wp-discord-post', 'wp_discord_post_product_webhook_url' );
+				register_setting( 'wp-discord-post', 'wp_discord_post_plus_product_webhook_url' );
 				register_setting( 'wp-discord-post', 'wp_discord_product_message_format' );
 			}
 
@@ -144,27 +144,27 @@ class WP_Discord_Post_Admin {
 				esc_html__( 'Send Orders', 'wp-discord-post' ),
 				array( $this, 'print_enabled_for_woocommerce_field' ),
 				'wp-discord-post',
-				'wp_discord_post_woocommerce_settings'
+				'wp_discord_post_plus_woocommerce_settings'
 			);
 
 			if ( 'yes' === get_option( 'wp_discord_enabled_for_woocommerce' ) ) {
 				// add_settings_field(
-				// 'wp_discord_post_order_webhook_url',
+				// 'wp_discord_post_plus_order_webhook_url',
 				// esc_html__( 'Discord Orders Webhook URL', 'wp-discord-post' ),
 				// array( $this, 'print_order_webhook_url_field' ),
 				// 'wp-discord-post',
-				// 'wp_discord_post_woocommerce_settings'
+				// 'wp_discord_post_plus_woocommerce_settings'
 				// );
 				add_settings_field(
-					'wp_discord_order_message_format',
+					'wp_discord_order_plus_message_format',
 					esc_html__( 'Order Message Format', 'wp-discord-post' ),
 					array( $this, 'print_order_message_format_field' ),
 					'wp-discord-post',
-					'wp_discord_post_woocommerce_settings'
+					'wp_discord_post_plus_woocommerce_settings'
 				);
 
-				// register_setting( 'wp-discord-post', 'wp_discord_post_order_webhook_url' );
-				register_setting( 'wp-discord-post', 'wp_discord_order_message_format' );
+				// register_setting( 'wp-discord-post', 'wp_discord_post_plus_order_webhook_url' );
+				register_setting( 'wp-discord-post', 'wp_discord_order_plus_message_format' );
 			}
 
 			register_setting( 'wp-discord-post', 'wp_discord_enabled_for_woocommerce_products' );
@@ -173,70 +173,70 @@ class WP_Discord_Post_Admin {
 
 		// Webhook confiuration section
 		add_settings_section(
-			'wp_discord_post_settings_webhooks',
-			esc_html__( 'Channels & Webhooks', 'wp_discord_post_settings_webhooks' ),
-			array( $this, 'wp_discord_post_settings_webhooks_callback' ),
+			'wp_discord_post_plus_settings_webhooks',
+			esc_html__( 'Channels & Webhooks', 'wp_discord_post_plus_settings_webhooks' ),
+			array( $this, 'wp_discord_post_plus_settings_webhooks_callback' ),
 			'wp-discord-post'
 		);
 
 		add_settings_field(
-			'wp_discord_post_settings_webhooks_input',
-			esc_html__( null, 'wp_discord_post_settings_webhooks_input' ),
-			array( $this, 'wp_discord_post_settings_webhooks_input' ),
+			'wp_discord_post_plus_settings_webhooks_input',
+			esc_html__( null, 'wp_discord_post_plus_settings_webhooks_input' ),
+			array( $this, 'wp_discord_post_plus_settings_webhooks_input' ),
 			'wp-discord-post',
-			'wp_discord_post_settings_webhooks'
+			'wp_discord_post_plus_settings_webhooks'
 		);
 
 		add_settings_field(
-			'wp_discord_post_logging',
+			'wp_discord_post_plus_logging',
 			esc_html__( 'Logging', 'wp-discord-post' ),
 			array( $this, 'print_logging_field' ),
 			'wp-discord-post',
-			'wp_discord_post_settings'
+			'wp_discord_post_plus_settings'
 		);
 
 		add_settings_field(
-			'wp_discord_post_mention_everyone',
+			'wp_discord_post_plus_mention_everyone',
 			esc_html__( 'Mention Everyone', 'wp-discord-post' ),
 			array( $this, 'print_mention_everyone_field' ),
 			'wp-discord-post',
-			'wp_discord_post_settings'
+			'wp_discord_post_plus_settings'
 		);
 
 		add_settings_field(
-			'wp_discord_post_disable_embed',
+			'wp_discord_post_plus_disable_embed',
 			esc_html__( 'Disable Embed Content', 'wp-discord-post' ),
 			array( $this, 'print_disable_embed_field' ),
 			'wp-discord-post',
-			'wp_discord_post_settings'
+			'wp_discord_post_plus_settings'
 		);
 
 		add_settings_field(
-			'wp_discord_post_post_webhook_url',
+			'wp_discord_post_plus_post_webhook_url',
 			esc_html__( 'Webhook URL for WordPress Posts', 'wp-discord-post' ),
 			array( $this, 'print_post_webhook_url_field' ),
 			'wp-discord-post',
-			'wp_discord_post_post_settings'
+			'wp_discord_post_plus_post_settings'
 		);
 
 		add_settings_field(
-			'wp_discord_post_message_format',
+			'wp_discord_post_plus_message_format',
 			esc_html__( 'Post Message Format', 'wp-discord-post' ),
 			array( $this, 'print_message_format_field' ),
 			'wp-discord-post',
-			'wp_discord_post_post_settings'
+			'wp_discord_post_plus_post_settings'
 		);
 
-		register_setting( 'wp-discord-post', 'wp_discord_post_bot_username' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_avatar_url' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_bot_token' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_webhook_url' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_logging' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_mention_everyone' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_disable_embed' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_post_webhook_url' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_message_format' );
-		register_setting( 'wp-discord-post', 'wp_discord_post_settings_webhooks_input' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_bot_username' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_avatar_url' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_bot_token' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_webhook_url' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_logging' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_mention_everyone' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_disable_embed' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_post_webhook_url' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_message_format' );
+		register_setting( 'wp-discord-post', 'wp_discord_post_plus_settings_webhooks_input' );
 	}
 
 	/**
@@ -250,9 +250,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Bot Username settings field.
 	 */
 	public function print_bot_username_field() {
-		$value = get_option( 'wp_discord_post_bot_username' );
+		$value = get_option( 'wp_discord_post_plus_bot_username' );
 
-		echo '<input type="text" name="wp_discord_post_bot_username" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_bot_username" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . esc_html__( 'The username that you want to use for the bot on your Discord server.', 'wp-discord-post' ) . '</span>';
 	}
 
@@ -260,9 +260,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Avatar URL settings field.
 	 */
 	public function print_avatar_url_field() {
-		$value = get_option( 'wp_discord_post_avatar_url' );
+		$value = get_option( 'wp_discord_post_plus_avatar_url' );
 
-		echo '<input type="text" name="wp_discord_post_avatar_url" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_avatar_url" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . esc_html__( 'The URL of the avatar that you want to use for the bot on your Discord server.', 'wp-discord-post' ) . '</span>';
 	}
 
@@ -270,9 +270,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Bot Token settings field.
 	 */
 	public function print_bot_token_field() {
-		$value = get_option( 'wp_discord_post_bot_token' );
+		$value = get_option( 'wp_discord_post_plus_bot_token' );
 
-		echo '<input type="text" name="wp_discord_post_bot_token" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_bot_token" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'Bot that will listen for Discord command. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://discordapp.com/developers/docs/intro">', '</a>' ) . '</span>';
 	}
 
@@ -280,9 +280,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Webhook URL settings field.
 	 */
 	public function print_webhook_url_field() {
-		$value = get_option( 'wp_discord_post_webhook_url' );
+		$value = get_option( 'wp_discord_post_plus_webhook_url' );
 
-		echo '<input type="text" name="wp_discord_post_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'The webhook URL from your Discord server. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks?page=2">', '</a>' ) . '</span>';
 	}
 
@@ -290,9 +290,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Logging settings field.
 	 */
 	public function print_logging_field() {
-		$value = get_option( 'wp_discord_post_logging' );
+		$value = get_option( 'wp_discord_post_plus_logging' );
 
-		echo '<input type="checkbox" name="wp_discord_post_logging" value="yes"' . checked( $value, 'yes', false ) . ' />';
+		echo '<input type="checkbox" name="wp_discord_post_plus_logging" value="yes"' . checked( $value, 'yes', false ) . ' />';
 		echo '<span class="description">' . esc_html__( 'Save debug data to the PHP error log.', 'wp-discord-post' ) . '</span>';
 	}
 
@@ -301,9 +301,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Mention Everyone settings field.
 	 */
 	public function print_mention_everyone_field() {
-		$value = get_option( 'wp_discord_post_mention_everyone' );
+		$value = get_option( 'wp_discord_post_plus_mention_everyone' );
 
-		echo '<input type="checkbox" name="wp_discord_post_mention_everyone" value="yes"' . checked( 'yes', $value, false ) . ' />';
+		echo '<input type="checkbox" name="wp_discord_post_plus_mention_everyone" value="yes"' . checked( 'yes', $value, false ) . ' />';
 		echo '<span class="description">' . esc_html__( 'Mention @everyone when sending the message to Discord.', 'wp-discord-post' ) . '</span>';
 	}
 
@@ -311,19 +311,19 @@ class WP_Discord_Post_Admin {
 	 * Prints the Disable embed settings field.
 	 */
 	public function print_disable_embed_field() {
-		$value = get_option( 'wp_discord_post_disable_embed' );
+		$value = get_option( 'wp_discord_post_plus_disable_embed' );
 
-		echo '<input type="checkbox" name="wp_discord_post_disable_embed" value="yes"' . checked( $value, 'yes', false ) . ' />';
-		echo '<span class="description">' . esc_html__( 'Disable the embed content added by WP Discord Post and use the default content automatically added by Discord.', 'wp-discord-post' ) . '</span>';
+		echo '<input type="checkbox" name="wp_discord_post_plus_disable_embed" value="yes"' . checked( $value, 'yes', false ) . ' />';
+		echo '<span class="description">' . esc_html__( 'Disable the embed content added by WP Discord Post Plus and use the default content automatically added by Discord.', 'wp-discord-post' ) . '</span>';
 	}
 
 	/**
 	 * Prints the Webhook URL settings field.
 	 */
 	public function print_post_webhook_url_field() {
-		$value = get_option( 'wp_discord_post_post_webhook_url' );
+		$value = get_option( 'wp_discord_post_plus_post_webhook_url' );
 
-		echo '<input type="text" name="wp_discord_post_post_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_post_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'The webhook URL from your Discord server. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks?page=2">', '</a>' ) . '</span>';
 	}
 
@@ -331,10 +331,10 @@ class WP_Discord_Post_Admin {
 	 * Prints the Message Format settings field.
 	 */
 	public function print_message_format_field() {
-		$value       = get_option( 'wp_discord_post_message_format' );
+		$value       = get_option( 'wp_discord_post_plus_message_format' );
 		$placeholder = __( '%author% just published the %post_type% %title% on their blog: %url%', 'wp-discord-post' );
 
-		echo '<textarea style="width:500px;height:150px;" name="wp_discord_post_message_format" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $value ) . '</textarea><br />';
+		echo '<textarea style="width:500px;height:150px;" name="wp_discord_post_plus_message_format" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $value ) . '</textarea><br />';
 		echo '<span class="description">' . esc_html__( 'Change the format of the message sent to Discord. The available placeholders are %post_type%, %title%, %author%, and %url%. HTML is not supported.', 'wp-discord-post' ) . '</span>';
 	}
 
@@ -352,9 +352,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Webhook URL settings field.
 	 */
 	public function print_cf7_webhook_url_field() {
-		$value = get_option( 'wp_discord_post_cf7_webhook_url' );
+		$value = get_option( 'wp_discord_post_plus_cf7_webhook_url' );
 
-		echo '<input type="text" name="wp_discord_post_cf7_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_cf7_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'The webhook URL from your Discord server. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks?page=2">', '</a>' ) . '</span>';
 	}
 
@@ -372,9 +372,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Webhook URL settings field.
 	 */
 	public function print_jetpack_webhook_url_field() {
-		$value = get_option( 'wp_discord_post_jetpack_webhook_url' );
+		$value = get_option( 'wp_discord_post_plus_jetpack_webhook_url' );
 
-		echo '<input type="text" name="wp_discord_post_jetpack_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_jetpack_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'The webhook URL from your Discord server. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks?page=2">', '</a>' ) . '</span>';
 	}
 
@@ -392,9 +392,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Webhook URL settings field.
 	 */
 	public function print_gf_webhook_url_field() {
-		$value = get_option( 'wp_discord_post_gf_webhook_url' );
+		$value = get_option( 'wp_discord_post_plus_gf_webhook_url' );
 
-		echo '<input type="text" name="wp_discord_post_gf_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_gf_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'The webhook URL from your Discord server. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks?page=2">', '</a>' ) . '</span>';
 	}
 
@@ -412,9 +412,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Webhook URL settings field.
 	 */
 	public function print_product_webhook_url_field() {
-		$value = get_option( 'wp_discord_post_product_webhook_url' );
+		$value = get_option( 'wp_discord_post_plus_product_webhook_url' );
 
-		echo '<input type="text" name="wp_discord_post_product_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_product_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'The webhook URL from your Discord server. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks?page=2">', '</a>' ) . '</span>';
 	}
 
@@ -443,9 +443,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Webhook URL settings field.
 	 */
 	public function print_order_webhook_url_field() {
-		$value = get_option( 'wp_discord_post_order_webhook_url' );
+		$value = get_option( 'wp_discord_post_plus_order_webhook_url' );
 
-		echo '<input type="text" name="wp_discord_post_order_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_order_webhook_url" value="' . esc_url( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'The webhook URL from your Discord server. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks?page=2">', '</a>' ) . '</span>';
 	}
 
@@ -453,10 +453,10 @@ class WP_Discord_Post_Admin {
 	 * Prints the Order Message Format settings field.
 	 */
 	public function print_order_message_format_field() {
-		$value       = get_option( 'wp_discord_order_message_format' );
+		$value       = get_option( 'wp_discord_order_plus_message_format' );
 		$placeholder = __( 'Order #%1$order_number% by %2$order_customer% has been created. The order total is %3$order_total%.', 'wp-discord-post' );
 
-		echo '<textarea style="width:500px;height:150px;" name="wp_discord_order_message_format" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $value ) . '</textarea><br />';
+		echo '<textarea style="width:500px;height:150px;" name="wp_discord_order_plus_message_format" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $value ) . '</textarea><br />';
 		echo '<span class="description">' . esc_html__( 'Change the format of the message sent to Discord when a new order is created in WooCommerce. The available placeholders are %1$order_number%, %2$order_customer%, and %3$order_total%.', 'wp-discord-post' ) . '</span>';
 	}
 
@@ -464,9 +464,9 @@ class WP_Discord_Post_Admin {
 	 * Prints the Giphy API Key settings field.
 	 */
 	public function print_giphy_api_key_field() {
-		$value = get_option( 'wp_discord_post_giphy_api_key' );
+		$value = get_option( 'wp_discord_post_plus_giphy_api_key' );
 
-		echo '<input type="text" name="wp_discord_post_giphy_api_key" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
+		echo '<input type="text" name="wp_discord_post_plus_giphy_api_key" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
 		echo '<span class="description">' . sprintf( esc_html__( 'Your API key from Giphy. %1$sLearn more%2$s', 'wp-discord-post' ), '<a href="https://developers.giphy.com/docs/#api-keys" target="_blank">', '</a>' ) . '</span>';
 	}
 
@@ -501,7 +501,7 @@ class WP_Discord_Post_Admin {
 		}
 
 		wp_add_privacy_policy_content(
-			'WP Discord Post',
+			'WP Discord Post Plus',
 			wp_kses_post( wpautop( $content, false ) )
 		);
 	}
@@ -509,22 +509,22 @@ class WP_Discord_Post_Admin {
 	/**
 	 * Prints the description for webhook section.
 	 */
-	public function wp_discord_post_settings_webhooks_callback() {
+	public function wp_discord_post_plus_settings_webhooks_callback() {
 		esc_html_e( 'Channel and webhook configuration for WooCommerce. All is the default channel which is used when no category is matched.', 'wp-discord-post' );
 	}
 
 	/**
 	 * Prints the inputs for webhook section.
 	 */
-	public function wp_discord_post_settings_webhooks_input_callback() {
+	public function wp_discord_post_plus_settings_webhooks_input_callback() {
 		esc_html_e( 'Channel and webhook configuration for WooCommerce.', 'wp-discord-post' );
 	}
 
 	/**
 	 * Prints the webhook settings field.
 	 */
-	public function wp_discord_post_settings_webhooks_input() {
-		$value              = get_option( 'wp_discord_post_settings_webhooks_input' );
+	public function wp_discord_post_plus_settings_webhooks_input() {
+		$value              = get_option( 'wp_discord_post_plus_settings_webhooks_input' );
 		$product_categories = $this->get_woocommerce_product_categories();
 
 		if ( empty( $value ) ) {
@@ -540,9 +540,9 @@ class WP_Discord_Post_Admin {
 		echo "<div class='discord_webhook_settings_section'>";
 
 		foreach ( $value as $k => $v ) {
-			$chatroom_key = 'wp_discord_post_settings_webhooks_input[' . $k . '][chatroom]';
-			$webhook_key  = 'wp_discord_post_settings_webhooks_input[' . $k . '][webhook]';
-			$category_key = 'wp_discord_post_settings_webhooks_input[' . $k . '][category]';
+			$chatroom_key = 'wp_discord_post_plus_settings_webhooks_input[' . $k . '][chatroom]';
+			$webhook_key  = 'wp_discord_post_plus_settings_webhooks_input[' . $k . '][webhook]';
+			$category_key = 'wp_discord_post_plus_settings_webhooks_input[' . $k . '][category]';
 
 			echo "<div class='discord_webhook_settings_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
 			echo "<a href='#' onclick=\"jQuery(this).parent().remove(); return false;\" style='display: block; float: right; font-size: 10px; position: relative; top: -5px; right: 0px;text-decoration:none;'> X </a>";
@@ -570,7 +570,7 @@ class WP_Discord_Post_Admin {
 		}
 
 		echo '</div>';
-		echo "<a href='#' onclick=\"var newIndex = jQuery('.discord_webhook_settings_single_section').length + 1; jQuery('.discord_webhook_settings_section').append(jQuery('.discord_webhook_settings_single_section').eq(0).clone()); jQuery('input', jQuery('.discord_webhook_settings_single_section').eq(-1)).val(''); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(0).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][chatroom]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(1).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][webhook]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).attr('name', 'wp_discord_post_settings_webhooks_input[' + newIndex + '][category]');jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).val(-1);return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 113px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
+		echo "<a href='#' onclick=\"var newIndex = jQuery('.discord_webhook_settings_single_section').length + 1; jQuery('.discord_webhook_settings_section').append(jQuery('.discord_webhook_settings_single_section').eq(0).clone()); jQuery('input', jQuery('.discord_webhook_settings_single_section').eq(-1)).val(''); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(0).attr('name', 'wp_discord_post_plus_settings_webhooks_input[' + newIndex + '][chatroom]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(1).attr('name', 'wp_discord_post_plus_settings_webhooks_input[' + newIndex + '][webhook]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).attr('name', 'wp_discord_post_plus_settings_webhooks_input[' + newIndex + '][category]');jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).val(-1);return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 113px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
 
 	}
 
@@ -584,4 +584,4 @@ class WP_Discord_Post_Admin {
 	}
 }
 
-new WP_Discord_Post_Admin();
+new WP_Discord_Post_Plus_Admin();

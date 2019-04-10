@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Formatting utilities
  */
-class WP_Discord_Post_Formatting {
+class WP_Discord_Post_Plus_Formatting {
 	/**
 	 * Gets the thumbnail for the post.
 	 *
@@ -24,7 +24,7 @@ class WP_Discord_Post_Formatting {
 		$thumbnail = '';
 
 		if ( has_post_thumbnail( $post_id ) ) {
-			$image_size   = apply_filters( 'wp_discord_post_embed_image_size', 'full' );
+			$image_size   = apply_filters( 'wp_discord_post_plus_embed_image_size', 'full' );
 			$thumbnail_id = get_post_thumbnail_id( $post_id );
 			$thumbnail    = wp_get_attachment_image_src( $thumbnail_id, $image_size );
 			$thumbnail    = $thumbnail[0];
@@ -92,7 +92,7 @@ class WP_Discord_Post_Formatting {
 			);
 		}
 
-		if ( wp_discord_post_is_logging_enabled() ) {
+		if ( wp_discord_post_plus_is_logging_enabled() ) {
 			error_log( print_r( $args, true ) );
 		}
 

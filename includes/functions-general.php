@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return bool
  */
-function wp_discord_post_is_logging_enabled() {
-	return 'yes' === get_option( 'wp_discord_post_logging' );
+function wp_discord_post_plus_is_logging_enabled() {
+	return 'yes' === get_option( 'wp_discord_post_plus_logging' );
 }
 
 /**
@@ -24,6 +24,6 @@ function wp_discord_post_is_logging_enabled() {
  *
  * @return bool
  */
-function wp_discord_post_is_embed_enabled() {
-	return apply_filters( 'wp_discord_post_embed_enabled', 'yes' === get_option( 'wp_discord_post_disable_embed' ) );
+function wp_discord_post_plus_is_embed_enabled() {
+	return apply_filters( 'wp_discord_post_plus_embed_enabled', 'yes' === get_option( 'wp_discord_post_plus_disable_embed' ) );
 }

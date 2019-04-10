@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Discord Post Posts
+ * WP Discord Post Plus Posts
  *
  * @author      Nicola Mustone
  * @license     GPL-2.0+
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Main class to handle posts.
  */
-class WP_Discord_Post_Post {
+class WP_Discord_Post_Post_Plus {
 	/**
 	 * Adds the hook to handle posts.
 	 */
@@ -72,13 +72,13 @@ class WP_Discord_Post_Post {
 
 		if ( $post_date < $current_time ) {
 			if ( wp_discord_post_is_logging_enabled() ) {
-				error_log( sprintf( 'WP Discord Post - Post %d is not a new post. Skipping.', $id ) );
+				error_log( sprintf( 'WP Discord Post Plus - Post %d is not a new post. Skipping.', $id ) );
 			}
 
 			return false;
 		} else {
 			if ( wp_discord_post_is_logging_enabled() ) {
-				error_log( sprintf( 'WP Discord Post - Post %d maybe is new. _wp_discord_post_published = %s', $id, 'yes' === get_post_meta( $id, '_wp_discord_post_published', true ) ) );
+				error_log( sprintf( 'WP Discord Post Plus - Post %d maybe is new. _wp_discord_post_published = %s', $id, 'yes' === get_post_meta( $id, '_wp_discord_post_published', true ) ) );
 			}
 
 			return 'yes' !== get_post_meta( $id, '_wp_discord_post_published', true ) && ! wp_is_post_revision( $id );
@@ -115,7 +115,7 @@ class WP_Discord_Post_Post {
 			$content = '@everyone ' . $content;
 		}
 
-		$content = apply_filters( 'wp_discord_post_post_content', $content, $post );
+		$content = apply_filters( 'wp_discord_post_post_plus_content', $content, $post );
 
 		return $content;
 	}
@@ -156,10 +156,10 @@ class WP_Discord_Post_Post {
 			);
 		}
 
-		$embed = apply_filters( 'wp_discord_post_post_embed', $embed, $post );
+		$embed = apply_filters( 'wp_discord_post_post_plus_embed', $embed, $post );
 
 		return $embed;
 	}
 }
 
-return new WP_Discord_Post_Post();
+return new WP_Discord_Post_Post_Plus();
