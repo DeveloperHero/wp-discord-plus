@@ -36,7 +36,7 @@ class WP_Discord_Post_Post_Plus {
 		$content = $this->_prepare_content( $id, $post );
 		$embed   = array();
 
-		if ( ! wp_discord_post_is_embed_enabled() ) {
+		if ( ! wp_discord_post_plus_is_embed_enabled() ) {
 			$embed = $this->_prepare_embed( $id, $post );
 		}
 
@@ -56,7 +56,7 @@ class WP_Discord_Post_Post_Plus {
 		$post_date    = date( 'Y-m-d H', strtotime( $post->post_date ) );
 		$current_time = current_time( 'Y-m-d H' );
 
-		if ( wp_discord_post_is_logging_enabled() ) {
+		if ( wp_discord_post_plus_is_logging_enabled() ) {
 			error_log(
 				print_r(
 					array(
@@ -71,13 +71,13 @@ class WP_Discord_Post_Post_Plus {
 		}
 
 		if ( $post_date < $current_time ) {
-			if ( wp_discord_post_is_logging_enabled() ) {
+			if ( wp_discord_post_plus_is_logging_enabled() ) {
 				error_log( sprintf( 'WP Discord Post Plus - Post %d is not a new post. Skipping.', $id ) );
 			}
 
 			return false;
 		} else {
-			if ( wp_discord_post_is_logging_enabled() ) {
+			if ( wp_discord_post_plus_is_logging_enabled() ) {
 				error_log( sprintf( 'WP Discord Post Plus - Post %d maybe is new. _wp_discord_post_published = %s', $id, 'yes' === get_post_meta( $id, '_wp_discord_post_published', true ) ) );
 			}
 
