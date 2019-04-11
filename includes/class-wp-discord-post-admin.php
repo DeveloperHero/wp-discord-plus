@@ -57,7 +57,7 @@ class WP_Discord_Post_Plus_Admin {
 			?>
 			</form>
 			<div class='donation-block'>
-				<p class='donation-text'> If you find it useful, please considering donating so that I can keep adding new features. </p>
+				<p class='donation-text'> If you find it useful, please considering <a href=''> donating </a> so that I can keep adding new features. </p>
 			</div>
 		</div>
 		<?php
