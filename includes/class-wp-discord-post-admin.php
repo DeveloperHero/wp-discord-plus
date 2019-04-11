@@ -573,7 +573,7 @@ class WP_Discord_Post_Plus_Admin {
 	 * Prints the webhook settings field.
 	 */
 	public function wp_discord_post_plus_settings_webhooks_input() {
-		$value              = get_option( 'wp_discord_post_plus_settings_webhooks_input' );
+		$value   = get_option( 'wp_discord_post_plus_settings_webhooks_input' );
 		$product_categories = $this->get_woocommerce_product_categories();
 
 		if ( empty( $value ) ) {
