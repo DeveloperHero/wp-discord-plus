@@ -25,6 +25,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+//define version and plugin name
+define('WP_DISCORD_POST_PLUS_VERSION', '2.1.3');
+define('WP_DISCORD_POST_PLUS_PLUGINNAME', 'WP Discord Post Plus');
+
 /**
  * Main class of the plugin WP Discord Post. Handles the bot and the admin settings.
  */
@@ -108,6 +112,10 @@ class WP_Discord_Post_Plus {
 		require_once 'includes/class-wp-discord-post-admin.php';
 		require_once 'includes/class-wp-discord-post-http.php';
 		require_once 'includes/class-wp-discord-post-formatting.php';
+
+		if (is_admin()) {
+			require_once 'includes/class-wp-discord-enqueue-assets.php';
+		}
 
 		$this->post = require_once 'includes/class-wp-discord-post-post.php';
 

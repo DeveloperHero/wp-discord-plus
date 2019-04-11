@@ -340,7 +340,7 @@ class WP_Discord_Post_Plus_Admin {
 			);
 		}
 
-		echo "<div class='discord_webhook_settings_section'>";
+		echo "<div class='discord_webhook_settings_section_post'>";
 
 		foreach ( $value as $k => $v ) {
 			$chatroom_key = 'wp_discord_post_plus_post_webhook_url[' . $k . '][chatroom]';
@@ -373,7 +373,7 @@ class WP_Discord_Post_Plus_Admin {
 		}
 
 		echo '</div>';
-		echo "<a href='#' onclick=\"var newIndex = jQuery('.wp_discord_post_plus_post_webhook_url_single_section').length + 1; jQuery('.wp_discord_post_plus_post_webhook_url_section').append(jQuery('.wp_discord_post_plus_post_webhook_url_single_section').eq(0).clone()); jQuery('input', jQuery('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1)).val(''); jQuery('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).children('div').children('input').eq(0).attr('name', 'wp_discord_post_plus_post_webhook_url[' + newIndex + '][chatroom]'); jQuery('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).children('div').children('input').eq(1).attr('name', 'wp_discord_post_plus_post_webhook_url[' + newIndex + '][webhook]'); jQuery('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).children('div').children('select').eq(0).attr('name', 'wp_discord_post_plus_post_webhook_url[' + newIndex + '][category]');jQuery('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).children('div').children('select').eq(0).val(-1);return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 113px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
+		echo "<a href='#' id='post_webhook_add_new' style='float: right; margin-right: 113px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
 	}
 
 	/**
@@ -586,7 +586,7 @@ class WP_Discord_Post_Plus_Admin {
 			);
 		}
 
-		echo "<div class='discord_webhook_settings_section'>";
+		echo "<div class='discord_webhook_settings_section_woocommerce'>";
 
 		foreach ( $value as $k => $v ) {
 			$chatroom_key = 'wp_discord_post_plus_settings_webhooks_input[' . $k . '][chatroom]';
@@ -619,7 +619,7 @@ class WP_Discord_Post_Plus_Admin {
 		}
 
 		echo '</div>';
-		echo "<a href='#' onclick=\"var newIndex = jQuery('.discord_webhook_settings_single_section').length + 1; jQuery('.discord_webhook_settings_section').append(jQuery('.discord_webhook_settings_single_section').eq(0).clone()); jQuery('input', jQuery('.discord_webhook_settings_single_section').eq(-1)).val(''); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(0).attr('name', 'wp_discord_post_plus_settings_webhooks_input[' + newIndex + '][chatroom]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('input').eq(1).attr('name', 'wp_discord_post_plus_settings_webhooks_input[' + newIndex + '][webhook]'); jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).attr('name', 'wp_discord_post_plus_settings_webhooks_input[' + newIndex + '][category]');jQuery('.discord_webhook_settings_single_section').eq(-1).children('div').children('select').eq(0).val(-1);return false;\" id='discord_webhooks_add_new' style='float: right; margin-right: 113px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
+		echo "<a href='#' id='discord_webhooks_add_new' style='float: right; margin-right: 113px; padding: 10px; font-size: 12px; box-shadow: none !important;'> + Add New </a> <div style='clear:both;'> </div>";
 
 	}
 
