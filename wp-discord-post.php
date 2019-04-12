@@ -107,7 +107,7 @@ class WP_Discord_Post_Plus {
 
 		do_action( 'wp_discord_post_plus_init' );
 
-		add_action('wp_ajax_test', array($this, 'test'));
+		//add_action('wp_ajax_test', array($this, 'test'));
 	}
 
 	/**
@@ -119,13 +119,13 @@ class WP_Discord_Post_Plus {
 		load_plugin_textdomain( 'wp-discord-post-plus', false, plugin_basename( __DIR__ ) . '/languages' );
 	}
 
-	public function test()
-	{
-		//$post = get_post(69);
-		//$product = wc_get_product( $id );
-		//$order = wc_get_order( 24 );
-		var_dump($this->woocommerce->send_order(68));
-	}
+	// public function test()
+	// {
+	// 	//$post = get_post(69);
+	// 	//$product = wc_get_product( $id );
+	// 	//$order = wc_get_order( 24 );
+	// 	var_dump($this->woocommerce->send_order(68));
+	// }
 }
 
 WP_Discord_Post_Plus::instance();
