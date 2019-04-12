@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Main class of the compatibility with WooCommerce.
  */
-class WP_Discord_Post_plus_WooCommerce_Plus {
+class WP_Discord_Post_Plus_WooCommerce {
 	/**
 	 * Adds the required hooks.
 	 */
@@ -26,10 +26,6 @@ class WP_Discord_Post_plus_WooCommerce_Plus {
 			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'send_order' ), 15 );
 		}
 
-		/**
-		 ** Add webhook URL filter to send orders to different channels based on the category
-		 **/
-		add_filter('wp_discord_post_plus_webhook_url', array($this, 'set_webhook_url'), 10, 2);
 	}
 
 	/**
@@ -52,7 +48,7 @@ class WP_Discord_Post_plus_WooCommerce_Plus {
 			$embed = $this->_prepare_product_embed( $id, $product );
 		}
 
-		$http = new WP_Discord_Post_plus_HTTP( 'product' );
+		$http = new WP_Discord_Post_Plus_HTTP( 'product', $id );
 		return $http->process( $content, $embed, $id );
 	}
 
@@ -77,7 +73,7 @@ class WP_Discord_Post_plus_WooCommerce_Plus {
 			$embed = $this->_prepare_order_embed( $order_id, $order );
 		}
 
-		$http = new WP_Discord_Post_plus_HTTP( 'post', $order_id );
+		$http = new WP_Discord_Post_Plus_HTTP( 'order', $order_id );
 		return $http->process( $content, $embed );
 	}
 
@@ -372,50 +368,6 @@ class WP_Discord_Post_plus_WooCommerce_Plus {
 
 		return $embed;
 	}
-
-	public function set_webhook_url($url, $order_id = 0)
-	{
-		if ($order_id === 0)
-			return $url;
-		
-		$order = wc_get_order($order_id);
-
-		if (! $order) {
-			return $url;
-		}
-
-		foreach ($order->get_items() as $item_id => $item_product) {
-			$product = $item_product->get_product();
-			$category_ids = $product->get_category_ids();
-
-			if (!empty($category_ids)) {
-				$webhook =  $this->get_category_webhook($category_ids[0]);
-				if (!empty($webhook)) {
-					return $webhook;
-				}
-			}
-		}
-
-		return $url;
-	}
-
-	private function get_category_webhook($category_id)
-	{
-		$option = get_option('wp_discord_post_plus_settings_webhooks_input');
-		$all = null;
-
-		foreach($option as $o) {
-			if ($o['category'] == $category_id){
-				return $o['webhook'];
-			}
-
-			if ($o['category'] == -1) {
-				$all = $o['webhook'];
-			}
-		}
-
-		return $all;
-	}
 }
 
-return new WP_Discord_Post_plus_WooCommerce_Plus();
+return new WP_Discord_Post_Plus_WooCommerce();

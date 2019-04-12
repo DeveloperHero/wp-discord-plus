@@ -577,6 +577,9 @@ class WP_Discord_Post_Plus_Admin {
 	 */
 	public function wp_discord_post_plus_settings_webhooks_input() {
 		$value   = get_option( 'wp_discord_post_plus_settings_webhooks_input' );
+		echo "<pre>";
+		print_r($value);
+		echo "</pre>";
 		$product_categories = $this->get_woocommerce_product_categories();
 
 		if ( empty( $value ) ) {

@@ -47,26 +47,6 @@ class WP_Discord_Post_Plus {
 	 */
 	public $post = null;
 
-	/**
-	 * The instance of WP_Discord_Post_CF7.
-	 *
-	 * @var WP_Discord_Post_CF7
-	 */
-	public $cf7 = null;
-
-	/**
-	 * The instance of WP_Discord_Post_GF.
-	 *
-	 * @var WP_Discord_Post_GF
-	 */
-	public $gf = null;
-
-	/**
-	 * The instance of WP_Discord_Post_Jetpack_CF.
-	 *
-	 * @var WP_Discord_Post_Jetpack_CF
-	 */
-	public $jetpack_cf = null;
 
 	/**
 	 * The instance of WP_Discord_Post_WooCommerce.
@@ -126,6 +106,8 @@ class WP_Discord_Post_Plus {
 		$this->load_textdomain();
 
 		do_action( 'wp_discord_post_plus_init' );
+
+		add_action('wp_ajax_test', array($this, 'test'));
 	}
 
 	/**
@@ -135,6 +117,14 @@ class WP_Discord_Post_Plus {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-discord-post-plus' );
 		load_textdomain( 'wp-discord-post-plus', WP_LANG_DIR . '/wp-discord-post/discord-post-plus-' . $locale . '.mo' );
 		load_plugin_textdomain( 'wp-discord-post-plus', false, plugin_basename( __DIR__ ) . '/languages' );
+	}
+
+	public function test()
+	{
+		//$post = get_post(69);
+		//$product = wc_get_product( $id );
+		//$order = wc_get_order( 24 );
+		var_dump($this->woocommerce->send_order(68));
 	}
 }
 

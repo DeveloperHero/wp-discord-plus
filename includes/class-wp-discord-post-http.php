@@ -55,6 +55,14 @@ class WP_Discord_Post_Plus_HTTP {
 	private $_context = '';
 
 	/**
+	 * The ID of the context.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $_context_id = '';
+
+	/**
 	 * Sets the bot username.
 	 *
 	 * @param string $username The bot username.
@@ -95,21 +103,63 @@ class WP_Discord_Post_Plus_HTTP {
 	 * @param string $url     Sets the webhook URL.
 	 * @param string $context The context used for this specific instance.
 	 */
-	public function set_webhook_url( $url = '' ) {
-		$context   = $this->get_context();
+	public function set_webhook_url() {
+		$context   			  = $this->get_context();
+		$id		   			  = $this->_context_id;
+		$post_webhooks  	  = get_option( 'wp_discord_post_plus_post_webhook_url' );
+		$woocommerce_webhooks = get_option( 'wp_discord_post_plus_settings_webhooks_input' );
+		
+		if ($context == 'post') {
+			$categories = wp_get_post_categories($id, array(
+				'fields' => 'ids',
+			));
 
-		if ( ! empty( $context ) ) {
-			$specific_url = get_option( 'wp_discord_post_plus_' . sanitize_key( $context ) . '_webhook_url' );
+			if (count($categories) === 0) {
+				return null;
+			}
+			
+			if (count($post_webhooks) !==0) {
+				foreach($post_webhooks as $webhooks) {
+					if (in_array($webhooks['category'], $categories)) {
+						$this->_webhook_url = esc_url_raw( $webhooks['webhook'] );
+						return true;
+					}
 
-			if ( ! empty( $specific_url ) && empty( $url ) ) {
-				$url = $specific_url;
+					if ($webhooks['category'] == -1 && !empty($webhooks['webhook'])) {
+						$default_url = esc_url_raw( $webhooks['webhook'] );
+					}
+				}
+				$this->_webhook_url = $default_url;
 			}
 		}
 		
-		$url = apply_filters( 'wp_discord_post_plus_' . sanitize_key( $context ) . '_webhook_url', $url);
-		$url = apply_filters( 'wp_discord_post_plus_webhook_url', $url, $this->order_id );
+		if ($context == 'order') {
+			$order = wc_get_order($this->_context_id);
 
-		$this->_webhook_url = esc_url_raw( $url );
+			foreach ($order->get_items() as $item_id => $item_product) {
+				$product = $item_product->get_product();
+				$category_ids = $product->get_category_ids();
+
+				if (count($woocommerce_webhooks) !==0) {
+					foreach($woocommerce_webhooks as $webhooks) {
+						if (in_array($webhooks['category'], $category_ids)) {
+							$this->_webhook_url = esc_url_raw( $webhooks['webhook'] );
+							return true;
+						}
+	
+						if ($webhooks['category'] == -1 && !empty($webhooks['webhook'])) {
+							$default_url = esc_url_raw( $webhooks['webhook'] );
+						}
+					}
+					$this->_webhook_url = $default_url;
+				}
+			}
+		}
+		
+		if ($context == 'product') {
+			//todo:: implement product
+			$this->_webhook_url = null;
+		}
 	}
 
 	/**
@@ -124,6 +174,15 @@ class WP_Discord_Post_Plus_HTTP {
 		} else {
 			$this->_context = sanitize_key( $context );
 		}
+	}
+
+	/**
+	 * Sets the context ID of this request.
+	 *
+	 * @param string $id The ID of the context of this request.
+	 */
+	public function set_context_id( $id ) {
+		$this->_context_id = $id;
 	}
 
 	/**
@@ -175,14 +234,15 @@ class WP_Discord_Post_Plus_HTTP {
 	 * Sets up the main properties to process the request.
 	 *
 	 * @param string $context The context of the request for this instance.
+	 * @param string $id The context id of the request for this instance.
 	 */
-	public function __construct( $context = '', $order_id = 0) {
-		$this->order_id = $order_id;
+	public function __construct( $context, $id) {
 		$this->set_context( $context );
+		$this->set_context_id( $id );
 		$this->set_username( get_option( 'wp_discord_post_plus_bot_username' ) );
 		$this->set_avatar( get_option( 'wp_discord_post_plus_avatar_url' ) );
 		$this->set_token( get_option( 'wp_discord_post_plus_bot_token' ) );
-		$this->set_webhook_url( get_option( 'wp_discord_post_plus_webhook_url' ) );
+		$this->set_webhook_url();
 	}
 
 	/**
@@ -194,6 +254,14 @@ class WP_Discord_Post_Plus_HTTP {
 	 * @return object;
 	 */
 	public function process( $content = '', $embed = array(), $id = 0 ) {
+
+		if (empty($this->_webhook_url)) {
+			if ( wp_discord_post_plus_is_logging_enabled() ) {
+				error_log( 'WP Discord Post Plus - Request aborted. Webhook URL empty.' );
+			}
+			return false;
+		}
+
 		$response = $this->_send_request( $content, $embed );
 
 		if ( ! is_wp_error( $response ) ) {

@@ -2,7 +2,7 @@
 /**
  * WP Discord Post Plus Posts
  *
- * @author      Nicola Mustone
+ * @author      M Yakub Mizan
  * @license     GPL-2.0+
  */
 
@@ -40,7 +40,8 @@ class WP_Discord_Post_Post_Plus {
 			$embed = $this->_prepare_embed( $id, $post );
 		}
 
-		$http = new WP_Discord_Post_HTTP( 'post' );
+		$http = new WP_Discord_Post_Plus_HTTP( 'post', $id );
+
 		return $http->process( $content, $embed, $id );
 	}
 
@@ -129,8 +130,8 @@ class WP_Discord_Post_Post_Plus {
 	 * @access private
 	 */
 	private function _prepare_embed( $id, $post ) {
-		$thumbnail = WP_Discord_Post_Formatting::get_thumbnail( $id );
-		$text      = WP_Discord_Post_Formatting::get_description( $post );
+		$thumbnail = WP_Discord_Post_Plus_Formatting::get_thumbnail( $id );
+		$text      = WP_Discord_Post_Plus_Formatting::get_description( $post );
 
 		$embed = array(
 			'title'       => html_entity_decode( get_the_title( $id ) ),
