@@ -25,7 +25,7 @@ jQuery(function($) {
 	$('#discord_webhooks_add_new').on('click', function(e){
 		e.preventDefault();
 
-		var index = $('.wp_discord_post_plus_post_webhook_url_single_section').length;
+		var index = $('.discord_webhook_settings_single_section').length;
 
 
 		$('.discord_webhook_settings_section_woocommerce').append( $('.discord_webhook_settings_single_section').eq(-1).clone() );
