@@ -348,9 +348,8 @@ class WP_Discord_Post_Plus_Admin {
 			$chatroom_key = 'wp_discord_post_plus_post_webhook_url[' . $count . '][chatroom]';
 			$webhook_key  = 'wp_discord_post_plus_post_webhook_url[' . $count . '][webhook]';
 			$category_key = 'wp_discord_post_plus_post_webhook_url[' . $count . '][category]';
-			$count++;
 
-			echo "<div class='wp_discord_post_plus_post_webhook_url_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
+			echo "<div data-index='" . $count . "' class='wp_discord_post_plus_post_webhook_url_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
 			echo "<a href='#' onclick=\"jQuery(this).parent().remove(); return false;\" style='display: block; float: right; font-size: 10px; position: relative; top: -5px; right: 0px;text-decoration:none;'> X </a>";
 			echo "<div style='width:20%; display:inline-block;'> <label> Category </label>";
 			echo "<select name='" . $category_key . "' >";
@@ -373,6 +372,7 @@ class WP_Discord_Post_Plus_Admin {
 
 			echo "<div style='width:50%; display:inline-block;'> <label> Webhook URL </label>";
 			echo "<input style='padding:5px; margin: 5px; width:65%;' name='" . $webhook_key . "' type='text' value='" . $v['webhook'] . "'/> </div></div>";
+			$count++;
 		}
 
 		echo '</div>';
@@ -598,9 +598,8 @@ class WP_Discord_Post_Plus_Admin {
 			$chatroom_key = 'wp_discord_post_plus_settings_webhooks_input[' . $count . '][chatroom]';
 			$webhook_key  = 'wp_discord_post_plus_settings_webhooks_input[' . $count . '][webhook]';
 			$category_key = 'wp_discord_post_plus_settings_webhooks_input[' . $count . '][category]';
-			$count++;
 
-			echo "<div class='discord_webhook_settings_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
+			echo "<div data-index='" . $count . "' class='discord_webhook_settings_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
 			echo "<a href='#' onclick=\"jQuery(this).parent().remove(); return false;\" style='display: block; float: right; font-size: 10px; position: relative; top: -5px; right: 0px;text-decoration:none;'> X </a>";
 			echo "<div style='width:20%; display:inline-block;'> <label> Category </label>";
 			echo "<select name='" . $category_key . "' >";
@@ -623,6 +622,7 @@ class WP_Discord_Post_Plus_Admin {
 
 			echo "<div style='width:50%; display:inline-block;'> <label> Webhook URL </label>";
 			echo "<input style='padding:5px; margin: 5px; width:65%;' name='" . $webhook_key . "' type='text' value='" . $v['webhook'] . "'/> </div></div>";
+			$count++;
 		}
 
 		echo '</div>';

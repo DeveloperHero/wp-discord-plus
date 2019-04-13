@@ -2,9 +2,10 @@ jQuery(function($) {
 	$('#post_webhook_add_new, #discord_webhooks_add_new').on('click', function(e){
 		e.preventDefault();
 
-		var index = $('.wp_discord_post_plus_post_webhook_url_single_section').length;
+		var index = parseInt( $('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).attr('data-index') ) + 1;
 
-		$('.discord_webhook_settings_section_post').append( $('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).clone() );
+		$('.discord_webhook_settings_section_post').append($('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).clone());
+		$('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1).attr('data-index', index)
 
 		$('input', $('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1)).val('');
 		$('input', $('.wp_discord_post_plus_post_webhook_url_single_section').eq(-1)).eq(0).attr('name', 'wp_discord_post_plus_post_webhook_url[' + index + '][chatroom]');
@@ -25,10 +26,11 @@ jQuery(function($) {
 	$('#discord_webhooks_add_new').on('click', function(e){
 		e.preventDefault();
 
-		var index = $('.discord_webhook_settings_single_section').length;
+		var index = parseInt( $('.discord_webhook_settings_single_section').eq(-1).attr('data-index') ) + 1;
 
 
-		$('.discord_webhook_settings_section_woocommerce').append( $('.discord_webhook_settings_single_section').eq(-1).clone() );
+		$('.discord_webhook_settings_section_woocommerce').append($('.discord_webhook_settings_single_section').eq(-1).clone());
+		$('.discord_webhook_settings_single_section').eq(-1).attr('data-index', index);
 
 		$('input', $('.discord_webhook_settings_single_section').eq(-1)).val('');
 		$('input', $('.discord_webhook_settings_single_section').eq(-1)).eq(0).attr('name', 'wp_discord_post_plus_settings_webhooks_input[' + index + '][chatroom]');
