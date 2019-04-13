@@ -33,6 +33,12 @@ class WP_Discord_Post_Post_Plus {
 			return;
 		}
 
+		$send_flag = get_post_meta($id, '_wp_discord_send_flag', true);
+
+		if ($send_flag) { //do not send to discord selected
+			return false;
+		}
+
 		$content = $this->_prepare_content( $id, $post );
 		$embed   = array();
 
