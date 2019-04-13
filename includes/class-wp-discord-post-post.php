@@ -18,7 +18,7 @@ class WP_Discord_Post_Post_Plus {
 	 * Adds the hook to handle posts.
 	 */
 	public function __construct() {
-		add_action( 'publish_post', array( $this, 'send' ), 10, 2 );
+		add_action( 'send_post_to_discord', array( $this, 'send' ), 10, 2 );
 	}
 
 	/**
@@ -31,12 +31,6 @@ class WP_Discord_Post_Post_Plus {
 		// Check if the post has been already published and if it should be processed.
 		if ( ! apply_filters( 'wp_discord_post_is_new_post', $this->is_new_post( $post ), $post ) ) {
 			return;
-		}
-
-		$send_flag = get_post_meta($id, '_wp_discord_send_flag', true);
-
-		if ($send_flag) { //do not send to discord selected
-			return false;
 		}
 
 		$content = $this->_prepare_content( $id, $post );
