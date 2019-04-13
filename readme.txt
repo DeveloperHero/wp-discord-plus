@@ -32,26 +32,6 @@ Once the data are sent they are under Discord's control and the plugin cannot re
 Learn more about Discord's privacy policy at [https://discordapp.com/privacy](https://discordapp.com/privacy).
 
 
-== Installation ==
-
-= Minimum Requirements =
-
-* PHP version 7.0 or greater.
-
-= Automatic installation =
-
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To do an automatic install of WP Discord Post, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
-
-In the search field type “WP Discord Post” and click Search Plugins. Once you’ve found the plugin you can view details about it such as the point release, rating and description. Most importantly of course, you can install it by simply clicking “Install Now”.
-
-= Manual installation =
-
-The manual installation method involves downloading this plugin and uploading it to your web-server via your favourite FTP application. The WordPress codex contains [instructions on how to do this here](https://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
-
-= Updating =
-
-Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
-
 == Changelog ==
 
 = 2.1.3 =

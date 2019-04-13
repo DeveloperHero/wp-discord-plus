@@ -92,6 +92,7 @@ class WP_Discord_Post_Plus {
 		require_once 'includes/class-wp-discord-post-admin.php';
 		require_once 'includes/class-wp-discord-post-http.php';
 		require_once 'includes/class-wp-discord-post-formatting.php';
+		require_once 'includes/class-wp-discord-metabox.php';
 
 		if (is_admin()) {
 			require_once 'includes/class-wp-discord-enqueue-assets.php';
