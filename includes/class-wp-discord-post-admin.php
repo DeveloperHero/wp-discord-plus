@@ -345,10 +345,13 @@ class WP_Discord_Post_Plus_Admin {
 
 		echo "<div class='discord_webhook_settings_section_post'>";
 
+		$count = 0;
+
 		foreach ( $value as $k => $v ) {
-			$chatroom_key = 'wp_discord_post_plus_post_webhook_url[' . $k . '][chatroom]';
-			$webhook_key  = 'wp_discord_post_plus_post_webhook_url[' . $k . '][webhook]';
-			$category_key = 'wp_discord_post_plus_post_webhook_url[' . $k . '][category]';
+			$chatroom_key = 'wp_discord_post_plus_post_webhook_url[' . $count . '][chatroom]';
+			$webhook_key  = 'wp_discord_post_plus_post_webhook_url[' . $count . '][webhook]';
+			$category_key = 'wp_discord_post_plus_post_webhook_url[' . $count . '][category]';
+			$count++;
 
 			echo "<div class='wp_discord_post_plus_post_webhook_url_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
 			echo "<a href='#' onclick=\"jQuery(this).parent().remove(); return false;\" style='display: block; float: right; font-size: 10px; position: relative; top: -5px; right: 0px;text-decoration:none;'> X </a>";
@@ -592,10 +595,13 @@ class WP_Discord_Post_Plus_Admin {
 
 		echo "<div class='discord_webhook_settings_section_woocommerce'>";
 
+		$count = 0; 
+
 		foreach ( $value as $k => $v ) {
-			$chatroom_key = 'wp_discord_post_plus_settings_webhooks_input[' . $k . '][chatroom]';
-			$webhook_key  = 'wp_discord_post_plus_settings_webhooks_input[' . $k . '][webhook]';
-			$category_key = 'wp_discord_post_plus_settings_webhooks_input[' . $k . '][category]';
+			$chatroom_key = 'wp_discord_post_plus_settings_webhooks_input[' . $count . '][chatroom]';
+			$webhook_key  = 'wp_discord_post_plus_settings_webhooks_input[' . $count . '][webhook]';
+			$category_key = 'wp_discord_post_plus_settings_webhooks_input[' . $count . '][category]';
+			$count++;
 
 			echo "<div class='discord_webhook_settings_single_section' style='border: 1px solid lightgrey; padding: 10px; width: 90%; margin:20px 20px 0 0'>";
 			echo "<a href='#' onclick=\"jQuery(this).parent().remove(); return false;\" style='display: block; float: right; font-size: 10px; position: relative; top: -5px; right: 0px;text-decoration:none;'> X </a>";
