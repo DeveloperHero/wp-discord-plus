@@ -56,9 +56,6 @@ class WP_Discord_Post_Plus_Admin {
 			submit_button( __( 'Save Settings', 'wp-discord-post-plus' ) );
 			?>
 			</form>
-			<div class='donation-block'>
-				<p class='donation-text'> If you find it useful, please considering <a href=''> donating </a> so that I can keep adding new features. </p>
-			</div>
 		</div>
 		<?php
 	}
