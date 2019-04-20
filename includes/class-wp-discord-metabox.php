@@ -110,11 +110,11 @@ class WP_Discord_Post_Plus_Metabox {
     public function publish_post($id, $post)
     {
         $discord_flag = get_post_meta($id, 'wp_discord_send_flag', true);
-        $post_variable = 0;
+        $post_variable = 'no';
 
         if (isset($_POST['wp_discord_metabox_send_flag'])) 
         {
-            $post_variable = 1;
+            $post_variable = 'yes';
         }
 
         if ($discord_flag === 'yes' || $post_variable === 'yes')
