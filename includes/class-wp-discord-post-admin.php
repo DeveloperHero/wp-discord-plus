@@ -265,7 +265,8 @@ class WP_Discord_Post_Plus_Admin {
 		$value = get_option( 'wp_discord_post_plus_avatar_url' );
 
 		echo '<input type="text" name="wp_discord_post_plus_avatar_url" value="' . esc_attr( $value ) . '" style="width:300px;margin-right:10px;" />';
-		echo '<span class="description">' . esc_html__( 'The URL of the avatar that you want to use for the bot on your Discord server.', 'wp-discord-post-plus' ) . '</span>';
+		echo '<button class="upload-button"> Upload </button>';
+		echo '<span class="description">' . esc_html__( ' The URL of the avatar that you want to use for the bot on your Discord server.', 'wp-discord-post-plus' ) . '</span>';
 	}
 
 	/**

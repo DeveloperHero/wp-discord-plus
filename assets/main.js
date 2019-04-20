@@ -47,4 +47,31 @@ jQuery(function($) {
 			$('.discord_webhook_settings_single_section').eq(-1).css('background', 'transparent');
 		});
 	});
+
+	var frame; 
+
+	$('.upload-button').on('click', function (event) {
+		event.preventDefault();
+    
+		if ( frame ) {
+			frame.open();
+			return;
+		}
+
+		// Create a new media frame
+		frame = wp.media({
+			title: 'Select an Avatar',
+			button: {
+			  text: 'Select'
+			},
+			multiple: false  // Set to true to allow multiple files to be selected
+		});
+		
+		frame.on('select', function () {
+			var attachment = frame.state().get('selection').first().toJSON();
+			$('input[name=wp_discord_post_plus_avatar_url]').val( attachment.url );
+		});
+
+		frame.open();
+	});
 });
