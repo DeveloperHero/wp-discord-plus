@@ -327,7 +327,8 @@ class WP_Discord_Post_Plus_Admin {
 
 		$product_categories = get_categories( array(
 			'orderby' => 'name',
-			'order'   => 'ASC'
+			'order'   => 'ASC',
+			'hide_empty' => false,
 		));
 
 		if ( empty( $value ) ) {

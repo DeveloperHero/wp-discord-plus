@@ -114,12 +114,18 @@ class WP_Discord_Post_Plus_HTTP {
 				'fields' => 'ids',
 			));
 
+			if (!empty($_POST['wp_discord_metabox_override_channel']))
+			{
+				$categories = (array) $_POST['wp_discord_metabox_override_channel'];
+			}
+
 			if (count($categories) === 0) {
 				return null;
 			}
 			
 			if (count($post_webhooks) !==0) {
 				foreach($post_webhooks as $webhooks) {
+
 					if (in_array($webhooks['category'], $categories)) {
 						$this->_webhook_url = esc_url_raw( $webhooks['webhook'] );
 						return true;
@@ -129,6 +135,7 @@ class WP_Discord_Post_Plus_HTTP {
 						$default_url = esc_url_raw( $webhooks['webhook'] );
 					}
 				}
+
 				$this->_webhook_url = $default_url;
 			}
 		}

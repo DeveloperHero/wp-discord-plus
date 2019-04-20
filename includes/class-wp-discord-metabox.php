@@ -60,6 +60,8 @@ class WP_Discord_Post_Plus_Metabox {
         if ( $mention_flag === 'yes') {
             $mention_checked = 'checked="checked"';
         }
+
+        $channels = get_option('wp_discord_post_plus_post_webhook_url');
         
     ?>
         <div>
@@ -73,7 +75,22 @@ class WP_Discord_Post_Plus_Metabox {
             <input id='wp_discord_metabox_mention_flag' name='wp_discord_metabox_mention_flag' type="checkbox" value="yes" <?php echo $mention_checked; ?>>
             <label for="wp_discord_metabox_mention_flag"> Mention @everyone </label>
         </div>
+        <hr />
+        <p> If you want to override the channel for this particular post, select it from the list. </p> 
+        <?php if (!empty($channels)): ?>
+        <div>
+            <label for="wp_discord_metabox_mention_flag"> Override Channel </label>
+            <br />
+            <select name='wp_discord_metabox_override_channel'> 
+                <option value=''> Select A Channel </option>
+               <?php 
+                foreach($channels as $channel) {
+                    echo "<option value='" . $channel['category'] . "'> " . $channel['chatroom'] . "</option>";
+                } ?>
+            </select>
+        </div>
         <?php
+        endif; 
     }
 
     public function save_post_meta($post_id)
