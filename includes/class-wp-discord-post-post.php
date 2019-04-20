@@ -99,8 +99,8 @@ class WP_Discord_Post_Post_Plus {
 		$author = get_user_by( 'ID', $author );
 		$author = $author->display_name;
 
-		$mention_everyone = get_option( 'wp_discord_post_mention_everyone' );
-		$message_format   = get_option( 'wp_discord_post_message_format' );
+		$mention_everyone = get_option( 'wp_discord_post_plus_mention_everyone' );
+		$message_format   = get_option( 'wp_discord_post_plus_disable_embed' );
 
 		$content = str_replace(
 			array( '%title%', '%author%', '%url%', '%post_type%' ),
