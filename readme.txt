@@ -3,7 +3,7 @@ Contributors: mymizan, orchestra
 Tags: discord, post, publish, server, chat, gaming, streaming, community, blog, woocommerce
 Requires at least: 4.4
 Tested up to: 5.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,3 +70,9 @@ The plugin is free. There's no lock-ins or paid promotions needed. However, if y
 
 = 1.0.0 =
 * Initial Release
+
+= 1.0.1 =
+* Select Avatar URL form the media gallery
+* Allow to override the channel in the post metabox
+*  Mention everyone bug fixed
+* Allow to override the mention everyone in the post metabox

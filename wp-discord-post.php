@@ -10,7 +10,7 @@
  * Description: A Discord integration that sends a message on your desired Discord server and channel for every new post published.
  * Based on the original plugin WP Discord Post by Nicola Mustone, which is available on the WordPress Directory.
  *
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Developer Hero
  * Author URI:  https://developerhero.net/
  * Text Domain: wp-discord-post-plus
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 //define version and plugin name
-define('WP_DISCORD_POST_PLUS_VERSION', '1.0.0');
+define('WP_DISCORD_POST_PLUS_VERSION', '1.0.1');
 define('WP_DISCORD_POST_PLUS_PLUGINNAME', 'WP Discord Post Plus');
 
 /**
