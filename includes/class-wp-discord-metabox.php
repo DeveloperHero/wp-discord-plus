@@ -42,35 +42,67 @@ class WP_Discord_Post_Plus_Metabox {
 
     public function custom_meta_boxes_html($post)
     {
-        $value = get_post_meta($post->ID, 'wp_discord_send_flag', true);
-        $checked = 'checked="checked"';
+        $send_flag = get_post_meta($post->ID, 'wp_discord_send_flag', true);
+        $mention_flag = get_post_meta($post->ID, 'wp_discord_mention_flag', true);
 
-        if ($value) {
-            $checked = '';
+        if ($send_flag === 'no') {
+            $send_checked = '';
+        } else {
+            $send_checked = 'checked="checked"';
+        }
+
+        $mention_checked = '';
+
+        if ( get_option( 'wp_discord_post_plus_mention_everyone' ) === 'yes' ) {
+            $mention_checked = 'checked="checked"';
+        }
+
+        if ( $mention_flag === 'yes') {
+            $mention_checked = 'checked="checked"';
         }
         
     ?>
         <div>
             <br />
-            <input name='wp_discord_metabox_send_flag' type="checkbox" value="1" <?php echo $checked; ?>>
-            <label for="editor-post-taxonomies-hierarchical-term-1">Send to Discord</label>
-            <br /> <br />
-            <p> If you do not want to send this post to discord, uncheck the option above. It's only applicable when publishing new posts. </p>
+            <input id='wp_discord_metabox_send_flag' name='wp_discord_metabox_send_flag' type="checkbox" value="yes" <?php echo $send_checked; ?>>
+            <label for="wp_discord_metabox_send_flag">Send to Discord</label>
         </div>
-    <?php
+    
+        <div>
+            <br />
+            <input id='wp_discord_metabox_mention_flag' name='wp_discord_metabox_mention_flag' type="checkbox" value="yes" <?php echo $mention_checked; ?>>
+            <label for="wp_discord_metabox_mention_flag"> Mention @everyone </label>
+        </div>
+        <?php
     }
 
     public function save_post_meta($post_id)
     {
+        if (get_post_status($post_id) == 'auto-draft') {
+            return;
+        }
+
         if (isset($_POST['wp_discord_metabox_send_flag'])) {
-            $value = 1;
+            $value = 'yes';
         } else {
-            $value = 0;
+            $value = 'no';
         }
 
         update_post_meta(
             $post_id,
             'wp_discord_send_flag',
+            $value
+        );
+
+        if (isset($_POST['wp_discord_metabox_mention_flag'])) {
+            $value = 'yes';
+        } else {
+            $value = 'no';
+        }
+
+        update_post_meta(
+            $post_id,
+            'wp_discord_mention_flag',
             $value
         );
     }
