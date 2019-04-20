@@ -117,7 +117,7 @@ class WP_Discord_Post_Plus_Metabox {
             $post_variable = 1;
         }
 
-        if ($discord_flag == 1 || $post_variable == 1)
+        if ($discord_flag === 'yes' || $post_variable === 'yes')
         {
             do_action('send_post_to_discord', $id, $post);
         }
