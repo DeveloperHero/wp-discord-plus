@@ -100,7 +100,7 @@ class WP_Discord_Post_Post_Plus {
 		$author = $author->display_name;
 
 		$mention_everyone = get_option( 'wp_discord_post_plus_mention_everyone' );
-		$message_format   = get_option( 'wp_discord_post_plus_disable_embed' );
+		$message_format   = get_option( 'wp_discord_post_plus_message_format' );
 
 		if (isset($_POST['wp_discord_metabox_mention_flag'])) { //user overwriting settings from post editor 
 			$mention_everyone = 'yes';
