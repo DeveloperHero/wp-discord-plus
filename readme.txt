@@ -1,9 +1,9 @@
 === WP Discord Post Plus -  Supports Unlimited Channels ===
 Contributors: mymizan, orchestra
-Tags: discord, post, publish, server, chat, gaming, streaming, community, blog, woocommerce
+Tags: discord, post, publish, server, chat, gaming, streaming, community, blog, woocommerce, cryptocurrency, cryptocurrency blog, gaming blog
 Requires at least: 4.4
-Tested up to: 5.1
-Stable tag: 1.0.1
+Tested up to: 5.2
+Stable tag: 1.0.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,3 +76,8 @@ The plugin is free. There's no lock-ins or paid promotions needed. However, if y
 * Allow to override the channel in the post metabox
 *  Mention everyone bug fixed
 * Allow to override the mention everyone in the post metabox
+
+= 1.0.2 =
+* Fixed issue with disable embed content
+* Renamed All (the default category) to Default to avoid confusion 
+* Minor Fixes

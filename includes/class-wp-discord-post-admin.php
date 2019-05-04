@@ -355,7 +355,7 @@ class WP_Discord_Post_Plus_Admin {
 			echo "<a href='#' onclick=\"jQuery(this).parent().remove(); return false;\" style='display: block; float: right; font-size: 10px; position: relative; top: -5px; right: 0px;text-decoration:none;'> X </a>";
 			echo "<div style='width:20%; display:inline-block;'> <label> Category </label>";
 			echo "<select name='" . $category_key . "' >";
-			echo "<option value='-1'> All </option>";
+			echo "<option value='-1'> Default </option>";
 
 			if ( ! empty( $product_categories ) ) {
 				foreach ( $product_categories as $category ) {
@@ -605,7 +605,7 @@ class WP_Discord_Post_Plus_Admin {
 			echo "<a href='#' onclick=\"jQuery(this).parent().remove(); return false;\" style='display: block; float: right; font-size: 10px; position: relative; top: -5px; right: 0px;text-decoration:none;'> X </a>";
 			echo "<div style='width:20%; display:inline-block;'> <label> Category </label>";
 			echo "<select name='" . $category_key . "' >";
-			echo "<option value='-1'> All </option>";
+			echo "<option value='-1'> Default </option>";
 
 			if ( ! empty( $product_categories ) ) {
 				foreach ( $product_categories as $category ) {
