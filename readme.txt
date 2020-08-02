@@ -1,5 +1,5 @@
 === WP Discord Post Plus -  Supports Unlimited Channels ===
-Contributors: mymizan, orchestra
+Contributors: mymizan, orchestra, wpimtiaz 
 Tags: discord, post, publish, server, chat, gaming, streaming, community, blog, woocommerce, cryptocurrency, cryptocurrency blog, gaming blog
 Requires at least: 4.4
 Tested up to: 5.2
